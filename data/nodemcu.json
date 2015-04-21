@@ -15,94 +15,749 @@
       "!url": "http://esp.appsoulute.com/doc#node_dsleep"
     },
     "info": {
-      "!type": "fn(us: ?, option: ?) -> table",
+      "!type": "fn() -> table",
       "!doc": "return NodeMCU version, chipid, flashid, flash size, flash mode, flash speed.",
+      "!url": "http://esp.appsoulute.com/doc#node_chipip"
+    },
+    "chipip": {
+      "!type": "fn() -> number",
+      "!doc": "return chipip ID",
+      "!url": "http://esp.appsoulute.com/doc#node_chipip"
+    },
+    "flashid": {
+      "!type": "fn() -> number",
+      "!doc": "return flashid ID",
+      "!url": "http://esp.appsoulute.com/doc#node_flashid"
+    },
+    "heap": {
+      "!type": "fn() -> number",
+      "!doc": "return the remain HEAP size in bytes",
+      "!url": "http://esp.appsoulute.com/doc#node_heap"
+    },
+    "input": {
+      "!type": "fn(str: ?)",
+      "!doc": "accept a string and put the string into Lua interpretor. same as pcall(loadstring(str)) but support multi seperated line.",
+      "!url": "http://esp.appsoulute.com/doc#node_input"
+    },
+    "output": {
+      "!type": "fn()",
+      "!doc": "direct output from lua interpretor to a call back function.",
+      "!url": "http://esp.appsoulute.com/doc#node_output"
+    },
+    "compile": {
+      "!type": "fn(file: ?)",
+      "!doc": "compile lua text file into lua bytecode file, and save it as .lc file.",
       "!url": "http://esp.appsoulute.com/doc#node_info"
     }
   },
   "file": {
     "!type": "fn()",
     "!doc": "file module",
-    "!url": "http://esp.appsoulute.com/doc#file"
+    "!url": "http://esp.appsoulute.com/doc#file",
+    "remove": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "open": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "close": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "readline": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "writeline": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "read": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "write": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "flush": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "seek": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "list": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "format": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "rename": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "wifi": {
     "!type": "fn()",
     "!doc": "wifi module",
-    "!url": "http://esp.appsoulute.com/doc#wifi"
+    "!url": "http://esp.appsoulute.com/doc#wifi",
+    "setmode": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "getmode": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "startsmart": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "stopsmart": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "sleeptype": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "sta": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#",
+      "config": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "connect": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "disconnect": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "autoconnect": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "getip": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "setip": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "getmac": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "setmac": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "getap": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "status": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "getbroadcast": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      }
+    },
+    "ap": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#",
+      "config": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "getip": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "setip": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "getmac": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "setmac": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "getbroadcast": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      }
+    }
   },
   "timer": {
     "!type": "fn()",
     "!doc": "timer module",
-    "!url": "http://esp.appsoulute.com/doc#timer"
+    "!url": "http://esp.appsoulute.com/doc#timer",
+    "delay": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "now": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "alarm": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "stop": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "wdclr": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "time": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "gpio": {
     "!type": "fn()",
     "!doc": "gpio module",
-    "!url": "http://esp.appsoulute.com/doc#gpio"
+    "!url": "http://esp.appsoulute.com/doc#gpio",
+    "mode": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "read": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "write": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "trig": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "pwm": {
     "!type": "fn()",
     "!doc": "pwm module",
-    "!url": "http://esp.appsoulute.com/doc#pwm"
+    "!url": "http://esp.appsoulute.com/doc#pwm",
+    "setup": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "close": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "start": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "stop": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "setclock": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "getclock": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "setduty": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "getduty": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "net": {
     "!type": "fn()",
     "!doc": "net module",
-    "!url": "http://esp.appsoulute.com/doc#net"
+    "!url": "http://esp.appsoulute.com/doc#net",
+    "createServer": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "createConnection": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "server": {
+      "!type": "fn()",
+      "!doc": "net module",
+      "!url": "http://esp.appsoulute.com/doc#net",
+      "listen": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "close": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      }
+    },
+    "socket": {
+      "!type": "fn()",
+      "!doc": "net module",
+      "!url": "http://esp.appsoulute.com/doc#net",
+      "connect": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "send": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "on": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "close": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      },
+      "dns": {
+        "!type": "fn(file: ?)",
+        "!doc": "",
+        "!url": "http://esp.appsoulute.com/doc#"
+      }
+    }
   },
   "i2c": {
     "!type": "fn()",
     "!doc": "i2c module",
-    "!url": "http://esp.appsoulute.com/doc#i2c"
+    "!url": "http://esp.appsoulute.com/doc#i2c",
+    "setup": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "start": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "stop": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "address": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "write": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "read": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "adc": {
     "!type": "fn()",
     "!doc": "adc module",
-    "!url": "http://esp.appsoulute.com/doc#adc"
+    "!url": "http://esp.appsoulute.com/doc#adc",
+    "read": {
+      "!type": "fn(id: ?) -> number",
+      "!doc": "read adc value of id, esp8266 has only one 10bit adc, id=0, pin TOUT",
+      "!url": "http://esp.appsoulute.com/doc#adc_read"
+    },
+    "readvdd33": {
+      "!type": "fn() -> number",
+      "!doc": "compile lua text file into lua bytecode file, and save it as .lc file.",
+      "!url": "http://esp.appsoulute.com/doc#adc_readvdd33"
+    }
   },
   "uart": {
     "!type": "fn()",
     "!doc": "uart module",
-    "!url": "http://esp.appsoulute.com/doc#uart"
+    "!url": "http://esp.appsoulute.com/doc#uart",
+    "setup": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "on": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "write": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "ow": {
     "!type": "fn()",
     "!doc": "1-wire module",
-    "!url": "http://esp.appsoulute.com/doc#ow"
+    "!url": "http://esp.appsoulute.com/doc#ow",
+    "setup": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "reset": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "skip": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "select": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "write": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "write_bytes": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "read_bytes": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "read_bytes": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "depower": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "reset_search": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "target_search": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "search": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "crc8": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "check_crc16": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "crc160": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "bit": {
     "!type": "fn()",
     "!doc": "bit module",
-    "!url": "http://esp.appsoulute.com/doc#bit"
+    "!url": "http://esp.appsoulute.com/doc#bit",
+    "bnot": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "band": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "bor": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "bxor": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "lshift": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "rshift": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "arshift": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "bit": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "set": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "clear": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "isset": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "isclear": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "spi": {
     "!type": "fn()",
     "!doc": "spi module",
-    "!url": "http://esp.appsoulute.com/doc#spi"
+    "!url": "http://esp.appsoulute.com/doc#spi",
+    "setup": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "send": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "recv": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "mqtt": {
     "!type": "fn()",
     "!doc": "mqtt module",
-    "!url": "http://esp.appsoulute.com/doc#mqtt"
+    "!url": "http://esp.appsoulute.com/doc#mqtt",
+    "Client": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "ws2812": {
     "!type": "fn()",
     "!doc": "WS2812 module",
-    "!url": "http://esp.appsoulute.com/doc#ws2812"
+    "!url": "http://esp.appsoulute.com/doc#ws2812",
+    "writergb": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "u8g": {
     "!type": "fn()",
     "!doc": "u8g module",
-    "!url": "http://esp.appsoulute.com/doc#u8g"
+    "!url": "http://esp.appsoulute.com/doc#u8g",
+    "ssd1306_128x64_i2c": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "ssd1306_128x64_spi": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "font_6x10": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "font_chikita": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "DRAW_UPPER_RIGHT": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "DRAW_UPPER_LEFT": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "DRAW_LOWER_RIGHT": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "DRAW_LOWER_LEFT": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "DRAW_ALL": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "MODE_BW": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "MODE_GRAY2BIT": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "coap": {
     "!type": "fn()",
     "!doc": "coap module",
-    "!url": "http://esp.appsoulute.com/doc#coap"
+    "!url": "http://esp.appsoulute.com/doc#coap",
+    "Server": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "Client": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "CON": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "NON": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   },
   "cjson": {
     "!type": "fn()",
     "!doc": "coap module",
-    "!url": "http://esp.appsoulute.com/doc#cjson"
+    "!url": "http://esp.appsoulute.com/doc#cjson",
+    "encode": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    },
+    "decode": {
+      "!type": "fn(file: ?)",
+      "!doc": "",
+      "!url": "http://esp.appsoulute.com/doc#"
+    }
   }
 }
