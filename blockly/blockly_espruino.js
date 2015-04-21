@@ -54,7 +54,7 @@ for (var p in PORTS)
   }
 
 Blockly.Blocks.espruino_timeout = {
-  category: 'Espruino',
+  category: 'NodeMCU',
   init: function() {
       this.appendValueInput('SECONDS')
           .setCheck('Number')
@@ -72,7 +72,7 @@ Blockly.Blocks.espruino_timeout = {
   }
 };
 Blockly.Blocks.espruino_interval = {
-  category: 'Espruino',
+  category: 'NodeMCU',
   init: function() {
       this.appendValueInput('SECONDS')
           .setCheck('Number')
@@ -91,7 +91,7 @@ Blockly.Blocks.espruino_interval = {
 };
 
 Blockly.Blocks.espruino_pin = {
-//      category: 'Espruino',
+//      category: 'NodeMCU',
   init: function() {
     
     var start = 0;
@@ -130,7 +130,7 @@ Blockly.Blocks.espruino_pin = {
 
 
 Blockly.Blocks.espruino_watch = {
-  category: 'Espruino',
+  category: 'NodeMCU',
   init: function() {
       this.appendValueInput('PIN')
           .setCheck('Pin')
@@ -154,7 +154,7 @@ EDGES: [
 
 
 Blockly.Blocks.espruino_getTime = {
-    category: 'Espruino',
+    category: 'NodeMCU',
     init: function() {
       this.appendDummyInput().appendField('Time');
       this.setOutput(true, 'Number');
@@ -166,7 +166,7 @@ Blockly.Blocks.espruino_getTime = {
 
 
 Blockly.Blocks.espruino_digitalWrite = {
-  category: 'Espruino',
+  category: 'NodeMCU',
   init: function() {
       this.appendValueInput('PIN')
           .setCheck('Pin')
@@ -183,7 +183,7 @@ Blockly.Blocks.espruino_digitalWrite = {
   }
 };
 Blockly.Blocks.espruino_digitalPulse = {
-    category: 'Espruino',
+    category: 'NodeMCU',
     init: function() {
         this.appendValueInput('PIN')
             .setCheck('Pin')
@@ -202,7 +202,7 @@ Blockly.Blocks.espruino_digitalPulse = {
     }
   };
 Blockly.Blocks.espruino_digitalRead = {
-  category: 'Espruino',
+  category: 'NodeMCU',
   init: function() {
       this.appendValueInput('PIN')
           .setCheck('Pin')
@@ -216,7 +216,7 @@ Blockly.Blocks.espruino_digitalRead = {
 };
 
 Blockly.Blocks.espruino_analogWrite = {
-    category: 'Espruino',
+    category: 'NodeMCU',
     init: function() {
         this.appendValueInput('PIN')
             .setCheck('Pin')
@@ -233,7 +233,7 @@ Blockly.Blocks.espruino_analogWrite = {
     }
   };
 Blockly.Blocks.espruino_analogRead = {
-    category: 'Espruino',
+    category: 'NodeMCU',
     init: function() {
         this.appendValueInput('PIN')
             .setCheck('Pin')
@@ -247,7 +247,7 @@ Blockly.Blocks.espruino_analogRead = {
   };
 
 Blockly.Blocks.espruino_code = {
-    category: 'Espruino',
+    category: 'NodeMCU',
     init: function() {
       this.appendDummyInput().appendField(new Blockly.FieldTextArea("// Enter JavaScript Code Here"),"CODE");
 

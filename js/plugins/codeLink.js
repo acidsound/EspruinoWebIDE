@@ -16,7 +16,7 @@
   var MAX_URL = 2000;
   
   function init() {
-    Espruino.Core.Config.add("SHOW_CODE_LINK_ICON", {
+    NodeMCU.Core.Config.add("SHOW_CODE_LINK_ICON", {
       section : "General",
       name : "Show Copy URL Icon",
       description : "Show an icon that will create a URL containing the code from the Code Editor and will copy it to the clipboard. Great for sharing your code on Twitter/Websites/etc",
@@ -25,12 +25,12 @@
       onChange : function(newValue) { showIcon(newValue); }
     });    
 
-    showIcon(Espruino.Config.SHOW_CODE_LINK_ICON);
+    showIcon(NodeMCU.Config.SHOW_CODE_LINK_ICON);
   }
 
   function showIcon(show) {
     if (show) {
-      icon = Espruino.Core.App.addIcon({ 
+      icon = NodeMCU.Core.App.addIcon({
         id: "codeLink",
         icon: "star", 
         title : "Copy URL for this code to the clipboard", 
@@ -47,10 +47,10 @@
   }
   
   function copyCodeLink() {
-    var code = Espruino.Core.Code.getCurrentCode();
+    var code = NodeMCU.Core.Code.getCurrentCode();
     var url = "http://www.espruino.com/webide?code="+encodeURIComponent(code);
     if (url.length > MAX_URL) {
-      Espruino.Core.Notifications.error("Your code is too large for a URL (greater than "+MAX_URL+" characters)");
+      NodeMCU.Core.Notifications.error("Your code is too large for a URL (greater than "+MAX_URL+" characters)");
       return;
     }
     
@@ -60,10 +60,10 @@
     document.execCommand('copy');
     copier.remove();
     
-    Espruino.Core.Notifications.info("URL Copied to clipboard");
+    NodeMCU.Core.Notifications.info("URL Copied to clipboard");
   };
   
-  Espruino.Plugins.CodeLink = {
+  NodeMCU.Plugins.CodeLink = {
     init : init,
   };
 }());

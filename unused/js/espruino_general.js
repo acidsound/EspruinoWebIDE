@@ -23,27 +23,27 @@ THE SOFTWARE.
 */
 "use strict";
 (function(){
-  Espruino["General"] = {};
-  Espruino.General.startMode = "JS";
-  Espruino.General.webCamOn = false;
-  Espruino.General.showReloadButton = false;
-  Espruino.General["initOptions"] = function(){
-    Espruino.Options.optionFields.push({id:".startMode",module:"General",field:"startMode",type:"radio",options:["JS","G"]});
-    Espruino.Options.optionFields.push({id:"#webCamOn",module:"General",field:"webCamOn",type:"check",onLoaded:switchWebCam,onBlur:true});
-    Espruino.Options.optionFields.push({id:"#showReloadButton",module:"General",field:"showReloadButton",type:"check",onLoaded:switchReloadButton,onBlur:true});
-    Espruino.Options.optionBlocks.push({module:"General",buttonLine:1});
+  NodeMCU["General"] = {};
+  NodeMCU.General.startMode = "JS";
+  NodeMCU.General.webCamOn = false;
+  NodeMCU.General.showReloadButton = false;
+  NodeMCU.General["initOptions"] = function(){
+    NodeMCU.Options.optionFields.push({id:".startMode",module:"General",field:"startMode",type:"radio",options:["JS","G"]});
+    NodeMCU.Options.optionFields.push({id:"#webCamOn",module:"General",field:"webCamOn",type:"check",onLoaded:switchWebCam,onBlur:true});
+    NodeMCU.Options.optionFields.push({id:"#showReloadButton",module:"General",field:"showReloadButton",type:"check",onLoaded:switchReloadButton,onBlur:true});
+    NodeMCU.Options.optionBlocks.push({module:"General",buttonLine:1});
   };
-  Espruino.General.pinRegExp = /\/\*.+?\*\/.+?(,|\)|\])/g;
-  Espruino.General["setEditorCode"] = function(code,mode){
+  NodeMCU.General.pinRegExp = /\/\*.+?\*\/.+?(,|\)|\])/g;
+  NodeMCU.General["setEditorCode"] = function(code,mode){
       if(!mode){mode = $("#replaceInEditor")[0].checked;}
-      if(mode){Espruino.codeEditor.setValue(code);}
-      else{ Espruino.codeEditor.setValue(Espruino.codeEditor.getValue() + "\n" + code); }
+      if(mode){NodeMCU.codeEditor.setValue(code);}
+      else{ NodeMCU.codeEditor.setValue(NodeMCU.codeEditor.getValue() + "\n" + code); }
   };
-  Espruino.General["init"] = function(){
+  NodeMCU.General["init"] = function(){
       CodeMirror.commands.autocomplete = function(cm) {
         CodeMirror.showHint(cm, CodeMirror.hint.espruino);
       };
-      Espruino.codeEditor.on("contextmenu", function(cm,evt){ 
+      NodeMCU.codeEditor.on("contextmenu", function(cm,evt){
         if(cm.somethingSelected()){console.log(cm.getSelection());}
         else{
             var re =  /[\w$]/ ;
@@ -56,22 +56,22 @@ THE SOFTWARE.
       $("#terminal").click(function(){$(".subform").hide();});
       
   };
-  Espruino.General.setEditorLine = function(){
+  NodeMCU.General.setEditorLine = function(){
       var lineNr,start,end;
       lineNr = parseInt(this.title) - 1;
       start = parseInt($(this).attr("start"));
       end = parseInt($(this).attr("end")) - 1;
-      Espruino.codeEditor.setSelection({line:lineNr,ch:start},{line:lineNr,ch:end});
+      NodeMCU.codeEditor.setSelection({line:lineNr,ch:start},{line:lineNr,ch:end});
   };
-  Espruino.General.convertFromOS = function (chars) {
-    if (!Espruino.Core.Utils.isWindows()) return chars;
+  NodeMCU.General.convertFromOS = function (chars) {
+    if (!NodeMCU.Core.Utils.isWindows()) return chars;
     return chars.replace(/\r\n/g,"\n");
   };
-  Espruino.General.convertToOS = function (chars) {
-    if (!Espruino.Core.Utils.isWindows()) return chars;
+  NodeMCU.General.convertToOS = function (chars) {
+    if (!NodeMCU.Core.Utils.isWindows()) return chars;
     return chars.replace(/\r\n/g,"\n").replace(/\n/g,"\r\n");
   };
-  Espruino.General.ShowSubForm = function(divName,top,left,html,bgcolor,appendTo,divClass){
+  NodeMCU.General.ShowSubForm = function(divName,top,left,html,bgcolor,appendTo,divClass){
       var cls = divClass?divClass:"subform";
       $("#" + divName).remove();      
       $('<div id="' + divName + '" class="' + cls + ' style="z-index:5">' + html + '</div>').css(

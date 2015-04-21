@@ -14,35 +14,35 @@
   
   function init() {
     // Add stuff we need
-    Espruino.Core.App.addIcon({ 
+    NodeMCU.Core.App.addIcon({
       id: "deploy",
       icon: "deploy", 
-      title : "Send to Espruino", 
+      title : "Send to NodeMCU",
       order: 400, 
       area: { 
         name: "code", 
         position: "top"
       }, 
       click: function() {
-        Espruino.Core.MenuPortSelector.ensureConnected(function() {
-          Espruino.Core.Terminal.focus(); // give the terminal focus
-          Espruino.callProcessor("sending");
-          Espruino.Core.Code.getEspruinoCode(Espruino.Core.CodeWriter.writeToEspruino);
+        NodeMCU.Core.MenuPortSelector.ensureConnected(function() {
+          NodeMCU.Core.Terminal.focus(); // give the terminal focus
+          NodeMCU.callProcessor("sending");
+          NodeMCU.Core.Code.getEspruinoCode(NodeMCU.Core.CodeWriter.writeToEspruino);
         });
       }
     });
     
-    Espruino.addProcessor("connected", function(data, callback) {
+    NodeMCU.addProcessor("connected", function(data, callback) {
       $(".send").button( "option", "disabled", false);
       callback(data);
     });
-    Espruino.addProcessor("disconnected", function(data, callback) {
+    NodeMCU.addProcessor("disconnected", function(data, callback) {
       $(".send").button( "option", "disabled", true);  
       callback(data);
     });     
   }
   
-  Espruino.Core.Send = {
+  NodeMCU.Core.Send = {
     init : init,
   };
 }());

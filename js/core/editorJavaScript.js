@@ -67,7 +67,7 @@
     }
   }
   
-  Espruino.Core.EditorJavaScript = {
+  NodeMCU.Core.EditorJavaScript = {
     init : init,
     getCode : getCode,
     setCode : setCode,

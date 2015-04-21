@@ -16,7 +16,7 @@
   var webCamStream;
   
   function init() {
-    Espruino.Core.Config.add("SHOW_WEBCAM_ICON", {
+    NodeMCU.Core.Config.add("SHOW_WEBCAM_ICON", {
       section : "General",
       name : "Webcam Icon",
       description : "Show an icon that allows the terminal to be overlaid on the view from a Webcam",
@@ -25,12 +25,12 @@
       onChange : function(newValue) { showIcon(newValue); }
     });    
 
-    showIcon(Espruino.Config.SHOW_WEBCAM_ICON);
+    showIcon(NodeMCU.Config.SHOW_WEBCAM_ICON);
   }
 
   function showIcon(show) {
     if (show) {
-      icon = Espruino.Core.App.addIcon({ 
+      icon = NodeMCU.Core.App.addIcon({
         id: "webcam",
         icon: "webcam", 
         title : "WebCam View", 
@@ -65,7 +65,7 @@
           $("#terminal").addClass("terminal--webcam");
         }, function(e) {
           console.log('onError!', e);
-          Espruino.Core.Notifications.error("Problem initialising WebCam");
+          NodeMCU.Core.Notifications.error("Problem initialising WebCam");
         });
       }
     } else {
@@ -73,10 +73,10 @@
       $('video').attr('src', "");
       $("#terminal").removeClass("terminal--webcam");
     }
-    Espruino.Core.Terminal.focus(); 
+    NodeMCU.Core.Terminal.focus();
   };
   
-  Espruino.Plugins.Webcam = {
+  NodeMCU.Plugins.Webcam = {
     init : init,
   };
 }());

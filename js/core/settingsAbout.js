@@ -27,17 +27,17 @@
 
     getVersion(function(version){
 
-      Espruino.Core.Config.addSection("About", {
-        description : "About the Espruino Web IDE v"+ version,
+      NodeMCU.Core.Config.addSection("About", {
+        description : "About the NodeMCU Web IDE v"+ version,
         sortOrder : -1000,
         getHTML : function(callback) {      
           $.get("/data/settings_about.html", function(data) {
             callback(data);
             var html;
-            if (Object.keys(Espruino.Core.Env.getBoardData()).length > 0)
-              html = Espruino.Core.Utils.htmlTable(Espruino.Core.Env.getBoardData());
+            if (Object.keys(NodeMCU.Core.Env.getBoardData()).length > 0)
+              html = NodeMCU.Core.Utils.htmlTable(NodeMCU.Core.Env.getBoardData());
             else
-              html = "<p>Unable to get board information. Please connect to an Espruino board first.</p>";
+              html = "<p>Unable to get board information. Please connect to an NodeMCU board first.</p>";
             $('.board_info').html( html );
           });
         }
@@ -45,7 +45,7 @@
     });    
   }
   
-  Espruino.Core.SettingsAbout = {
+  NodeMCU.Core.SettingsAbout = {
     init : init,
   };
 }());

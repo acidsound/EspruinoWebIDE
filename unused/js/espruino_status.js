@@ -24,15 +24,15 @@ THE SOFTWARE.
 "use strict";
 (function(){
     // Status/progress bar
-    Espruino["Status"] = {};
-    Espruino.Core.Status.statusSoundOn = false;
-    Espruino.Core.Status.errorSoundOn = false;    
-    Espruino.Core.Status.statusSpeakOn = false;
-    Espruino.Core.Status.errorSpeakOn = false;    
+    NodeMCU["Status"] = {};
+    NodeMCU.Core.Status.statusSoundOn = false;
+    NodeMCU.Core.Status.errorSoundOn = false;
+    NodeMCU.Core.Status.statusSpeakOn = false;
+    NodeMCU.Core.Status.errorSpeakOn = false;
     var statusBox, progressBox, progressIndicator,audioPlayer;
 
     
-    Espruino.Core.Status.init = function(){
+    NodeMCU.Core.Status.init = function(){
       statusBox = $("#status");
       progressBox = $("#progress");
       progressIndicator = $("#progressindicator");
@@ -41,22 +41,22 @@ THE SOFTWARE.
       document.body.appendChild(audioPlayer);
       audioPlayer.addEventListener('canplay', function() { audioPlayer.play(); }, false);
     };
-    Espruino.Status["initOptions"] = function(){
-      Espruino.Options.optionFields.push({id:"#errorSoundOn",module:"Status",field:"errorSoundOn",type:"check",onBlur:true});
-      Espruino.Options.optionFields.push({id:"#statusSoundOn",module:"Status",field:"statusSoundOn",type:"check",onBlur:true});
-      Espruino.Options.optionFields.push({id:"#errorSpeakOn",module:"Status",field:"errorSpeakOn",type:"check",onBlur:true});
-      Espruino.Options.optionFields.push({id:"#statusSpeakOn",module:"Status",field:"statusSpeakOn",type:"check",onBlur:true});
-      Espruino.Options.optionBlocks.push({module:"Status",buttonLine:1});
+    NodeMCU.Status["initOptions"] = function(){
+      NodeMCU.Options.optionFields.push({id:"#errorSoundOn",module:"Status",field:"errorSoundOn",type:"check",onBlur:true});
+      NodeMCU.Options.optionFields.push({id:"#statusSoundOn",module:"Status",field:"statusSoundOn",type:"check",onBlur:true});
+      NodeMCU.Options.optionFields.push({id:"#errorSpeakOn",module:"Status",field:"errorSpeakOn",type:"check",onBlur:true});
+      NodeMCU.Options.optionFields.push({id:"#statusSpeakOn",module:"Status",field:"statusSpeakOn",type:"check",onBlur:true});
+      NodeMCU.Options.optionBlocks.push({module:"Status",buttonLine:1});
     };
-    Espruino.Core.Status.sendSound = function(sound){
+    NodeMCU.Core.Status.sendSound = function(sound){
       var snd = "";
       if(sound === "error"){snd = "sounds/truck_horn.wav"; }
       else if(sound="status"){snd = "sounds/chime_up.wav"; }
       else {snd = "sounds/" + sound + ".wav"; }
       audioPlayer.src = snd;
     }    
-    Espruino.Core.Status.speak = function(text){
-      if(Espruino.Core.Utils.getChromeVersion() >= 33){
+    NodeMCU.Core.Status.speak = function(text){
+      if(NodeMCU.Core.Utils.getChromeVersion() >= 33){
         var msg = new SpeechSynthesisUtterance(text);
         window.speechSynthesis.speak(msg);
       }

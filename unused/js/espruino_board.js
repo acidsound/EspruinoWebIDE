@@ -31,11 +31,11 @@ THE SOFTWARE.
           */
   
     // Code to load and save configuration options
-    Espruino["Board"] = {};
-    Espruino.Board.setBoard = setBoard;
-    Espruino.Board.params = params;
-    Espruino.Board.boardActive = false;
-    Espruino.Board.boardEditSupport = false;
+    NodeMCU["Board"] = {};
+    NodeMCU.Board.setBoard = setBoard;
+    NodeMCU.Board.params = params;
+    NodeMCU.Board.boardActive = false;
+    NodeMCU.Board.boardEditSupport = false;
     
     var boardFolder = "http://www.espruino.com/json/";
     var boardImgFolder = "img/";
@@ -67,42 +67,42 @@ THE SOFTWARE.
         return r;
       }
     }
-    Espruino.Board.init = function() {
+    NodeMCU.Board.init = function() {
       switchOptions();
     };
-    Espruino.Board.initOptions = function() {
-      Espruino.Options.optionFields.push({id:"#boardActive",module:"Board",field:"boardActive",type:"check",onLoaded:switchOptions,onBlur:true});
-      Espruino.Options.optionFields.push({id:"#boardEditSupport",module:"Board",field:"boardEditSupport",type:"check",onLoaded:switchOptions,onBlur:true});      
-      Espruino.Options.optionBlocks.push({module:"Board",buttonLine:2,onLoaded:switchOptions});
+    NodeMCU.Board.initOptions = function() {
+      NodeMCU.Options.optionFields.push({id:"#boardActive",module:"Board",field:"boardActive",type:"check",onLoaded:switchOptions,onBlur:true});
+      NodeMCU.Options.optionFields.push({id:"#boardEditSupport",module:"Board",field:"boardEditSupport",type:"check",onLoaded:switchOptions,onBlur:true});
+      NodeMCU.Options.optionBlocks.push({module:"Board",buttonLine:2,onLoaded:switchOptions});
     };
 
-    Espruino.Board.getBoardObject = function() {
+    NodeMCU.Board.getBoardObject = function() {
       return boardObject;
     }
 
     function switchOptions(){
-      if(Espruino.Board.boardActive === true){
+      if(NodeMCU.Board.boardActive === true){
         createBoardList();
         $(".board").button({ text: false, icons: { primary: "ui-icon-wrench" } }).hide();
         $(".param").button({ text: false, icons: { primary: "ui-icon-pin-s" } }).hide();
-        if(Espruino.Board.boardEditSupport === true){
-          Espruino.codeEditor.on("change",checkParam);
-          Espruino.codeEditor.on("cursorActivity",selectParam);
-          Espruino.codeEditor.on("contextmenu",setParam);
+        if(NodeMCU.Board.boardEditSupport === true){
+          NodeMCU.codeEditor.on("change",checkParam);
+          NodeMCU.codeEditor.on("cursorActivity",selectParam);
+          NodeMCU.codeEditor.on("contextmenu",setParam);
         }
         else{
-          Espruino.codeEditor.off("change",checkParam);
-          Espruino.codeEditor.off("cursorActivity",selectParam);
-          Espruino.codeEditor.off("contextmenu",setParam);
+          NodeMCU.codeEditor.off("change",checkParam);
+          NodeMCU.codeEditor.off("cursorActivity",selectParam);
+          NodeMCU.codeEditor.off("contextmenu",setParam);
         }
       }
       else{
         $(".board").hide();
         $(".param").hide();
         $("#boardList").unbind().remove();
-        Espruino.codeEditor.off("change",checkParam);
-        Espruino.codeEditor.off("cursorActivity",selectParam);
-        Espruino.codeEditor.off("contextmenu",setParam);
+        NodeMCU.codeEditor.off("change",checkParam);
+        NodeMCU.codeEditor.off("cursorActivity",selectParam);
+        NodeMCU.codeEditor.off("contextmenu",setParam);
       }
     }
     function setParam(cm,evt){
@@ -110,14 +110,14 @@ THE SOFTWARE.
       var i,j,k;
       mkp = markedParam.find();
       selectedParam = cm.getRange(mkp.from,mkp.to);
-      if(Espruino.Process.Env.BOARD_NAME && selectedParam.match(Espruino.General.pinRegExp)){
+      if(NodeMCU.Process.Env.BOARD_NAME && selectedParam.match(NodeMCU.General.pinRegExp)){
         evt.preventDefault();
         selectedParam = new paramObj(selectedParam);
-        params = splitParams(Espruino.codeEditor.getValue().match(Espruino.General.pinRegExp));
+        params = splitParams(NodeMCU.codeEditor.getValue().match(NodeMCU.General.pinRegExp));
         html = '<div id="boardDiv" class="subform" style="position:relative">';
-        html += '<img src="' + boardImgFolder + Espruino.Process.Env.ShortName + '.jpg"';
+        html += '<img src="' + boardImgFolder + NodeMCU.Process.Env.ShortName + '.jpg"';
         html += 'width=' + viewPoint.width + ' height=' + viewPoint.height + '></div>';
-        Espruino.General.ShowSubForm("optionsdiv",30,200,html,"#efe","body");
+        NodeMCU.General.ShowSubForm("optionsdiv",30,200,html,"#efe","body");
         for(i in devices[selectedParam.device].channel){
           if(devices[selectedParam.device].channel[i].pins[selectedParam.subdevice]){
             addPinToImage(devices[selectedParam.device].channel[i].pins[selectedParam.subdevice]);
@@ -164,10 +164,10 @@ THE SOFTWARE.
     function selectParam(cm){
       var cPos,line,params,lPos,param;
       if(markedParam){ markedParam.clear();markedParam = false;}
-      if(Espruino.Process.Env.BOARD_NAME){
+      if(NodeMCU.Process.Env.BOARD_NAME){
         cPos = cm.getCursor();
         line = cm.getLine(cPos.line);
-        params = line.match(Espruino.General.pinRegExp);
+        params = line.match(NodeMCU.General.pinRegExp);
         if(params){
           for(var i = 0; i < params.length; i++){
             lPos = line.indexOf(params[i]);
@@ -181,9 +181,9 @@ THE SOFTWARE.
       }
     }
     function checkParam(){ //if board selected and replaceable parameter in source, switch button on
-      if(Espruino.Board.boardActive && 
-         Espruino.Process.Env.BOARD_NAME && 
-         Espruino.codeEditor.getValue().match(Espruino.General.pinRegExp)){
+      if(NodeMCU.Board.boardActive &&
+         NodeMCU.Process.Env.BOARD_NAME &&
+         NodeMCU.codeEditor.getValue().match(NodeMCU.General.pinRegExp)){
         $(".param").show().click(replaceParam);
       }
       else{
@@ -192,7 +192,7 @@ THE SOFTWARE.
     }
     function replaceParam(){ //opens table with parameter from source 
       var html,param;
-      params = splitParams(Espruino.codeEditor.getValue().match(Espruino.General.pinRegExp));
+      params = splitParams(NodeMCU.codeEditor.getValue().match(NodeMCU.General.pinRegExp));
       html = '<table border="1"><tr><th>device</th><th>type</th><th>Assigned</th></tr>';
       for(var i = 0; i < params.length; i++){
         param = params[i];
@@ -200,7 +200,7 @@ THE SOFTWARE.
         html += '<td>' + param.device + '</td><td>' + param.subdevice + '</td><td>' + param.pin + '</td></tr>';
       }
       html += '</table>';
-      Espruino.General.ShowSubForm("paramsdiv",30,300,html,"#efe","body");
+      NodeMCU.General.ShowSubForm("paramsdiv",30,300,html,"#efe","body");
       $(".parampin").unbind().hover(selectParamInEditor);
     }
     function splitParams(params){ //splits all parameters into object
@@ -214,14 +214,14 @@ THE SOFTWARE.
       var start,end,
           param = $($(this)[0].attributes["param"]).val();
       if(evt.originalEvent.type === "mouseout"){
-        Espruino.codeEditor.setCursor({line:0,ch:0});
+        NodeMCU.codeEditor.setCursor({line:0,ch:0});
       }
       else{
-        for(var i = 0; i < Espruino.codeEditor.lineCount(); i++){
-          start = Espruino.codeEditor.getLine(i).indexOf(param);
+        for(var i = 0; i < NodeMCU.codeEditor.lineCount(); i++){
+          start = NodeMCU.codeEditor.getLine(i).indexOf(param);
           if(start > 0){
             end = start + param.length;
-            Espruino.codeEditor.setSelection({line:i,ch:start},{line:i,ch:end});
+            NodeMCU.codeEditor.setSelection({line:i,ch:start},{line:i,ch:end});
             break;
           }
         }  
@@ -243,21 +243,21 @@ THE SOFTWARE.
       },"text").fail(function(a,b,c){console.log(a,b,c);});
     }
     function selectBoard(){ //event for change in boardlist, loads all data around board
-      if(Espruino.Serial.isConnected() === true){
-        Espruino.Core.Notifications.warning("Close connection first"); 
-        $("#boardList").val(Espruino.Process.Env.BOARD_NAME);
+      if(NodeMCU.Serial.isConnected() === true){
+        NodeMCU.Core.Notifications.warning("Close connection first");
+        $("#boardList").val(NodeMCU.Process.Env.BOARD_NAME);
       }
       else{ 
         loadBoard($(this).val());
       }
     }
-    function loadBoard(boardName){ //loads boarddata from Espruino.com, merges with "my" position data
+    function loadBoard(boardName){ //loads boarddata from NodeMCU.com, merges with "my" position data
       if(boardName !== ""){
         $.getJSON(boardFolder + boardName + ".json",function(data){
           boardObject = data;
-          Espruino.Process.setProcess(data);
-          Espruino.Process.Env.ShortName = boardName;
-          Espruino.Flasher.checkBoardInfo(data);
+          NodeMCU.Process.setProcess(data);
+          NodeMCU.Process.Env.ShortName = boardName;
+          NodeMCU.Flasher.checkBoardInfo(data);
           mergePosition(data,boardName,getDevices);          
           checkParam();
         });
@@ -265,7 +265,7 @@ THE SOFTWARE.
       else{
         devices = {};
         $(".board").hide();
-        Espruino.Process.setProcess({});
+        NodeMCU.Process.setProcess({});
         checkParam();
       }
     }
@@ -352,7 +352,7 @@ THE SOFTWARE.
     }
     function openBoard(){ //creates a div to handle boarddata
       var html,param;
-      params = splitParams(Espruino.codeEditor.getValue().match(Espruino.General.pinRegExp));
+      params = splitParams(NodeMCU.codeEditor.getValue().match(NodeMCU.General.pinRegExp));
       html = '<table border="1">';
       html += '<tr><td valign="top"><ul class="filetree" id="deviceTree">';
       if(params){
@@ -382,10 +382,10 @@ THE SOFTWARE.
       }
       html += '</ul></td>';
       html += '<td><div id="boardDiv" style="position:relative">';
-      html += '<img src="' + boardImgFolder + Espruino.Process.Env.ShortName + '.jpg"';
+      html += '<img src="' + boardImgFolder + NodeMCU.Process.Env.ShortName + '.jpg"';
       html += 'width=' + viewPoint.width + ' height=' + viewPoint.height + '></div></td>';
       html += '</tr></table>';
-      Espruino.General.ShowSubForm("optionsdiv",30,60,html,"#efe","body");
+      NodeMCU.General.ShowSubForm("optionsdiv",30,60,html,"#efe","body");
       $("#deviceTree").treeview({collapsed:true});
       $(".subdevice").unbind().hover(function(){hoverSubDevice($(this));}, function(){$(".pinFunction").remove(); });
       $(".paramPins").unbind().hover(function(){hoverParamPins($(this));}, function(){$(".pinFunction").remove(); });          
@@ -433,7 +433,7 @@ THE SOFTWARE.
       }
     }               
     function setupBoardButton() {
-      if (Espruino.Board.boardActive)
+      if (NodeMCU.Board.boardActive)
         $(".board").show().click(openBoard);
     }
     function setBoard(val){ //set selected value in list

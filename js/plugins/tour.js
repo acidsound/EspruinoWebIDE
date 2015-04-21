@@ -29,26 +29,26 @@
     },
     // now we start the real tour
     {
-      title: "Welcome to the Espruino Web IDE",
-      description: "The Espruino Web IDE is designed for writing code on microcontrollers that use the <a href='http://www.espruino.com' target='_blank'>Espruino JavaScript interpreter</a><br /><br />"+
+      title: "Welcome to the NodeMCU Web IDE",
+      description: "The NodeMCU Web IDE is designed for writing code on microcontrollers that use the <a href='http://www.espruino.com' target='_blank'>NodeMCU JavaScript interpreter</a><br /><br />"+
                    "To help you get up to speed quickly with the IDE, this tour will run you through some of the core features you'll need to know to get started. <br /><br />So when you are ready, click next to continue."
     },
     {
-      title: "Connect to your Espruino",
-      description: "The first thing you'll want to do is connect to your Espruino board by clicking the 'Connect' button.",
+      title: "Connect to your NodeMCU",
+      description: "The first thing you'll want to do is connect to your NodeMCU board by clicking the 'Connect' button.",
       attachTo: "#icon-connection",
       position: "bottomLeft"
     },
     {
       title: "Select your port",
-      description: "Connect your Espruino to an available USB port and select the port from the list.",
+      description: "Connect your NodeMCU to an available USB port and select the port from the list.",
       attachTo: ".window--modal",
       position: "bottom",
       onShow: function(){
-        Espruino.Core.MenuPortSelector.showPortSelector();
+        NodeMCU.Core.MenuPortSelector.showPortSelector();
       },
       onHide: function(){
-        Espruino.Core.App.closePopup();
+        NodeMCU.Core.App.closePopup();
       }
     },
     {
@@ -59,7 +59,7 @@
     },
     {
       title: "The terminal",
-      description: "To send simple commands to the Espruino, simply type them in the terminal window and hit enter to send.",
+      description: "To send simple commands to the NodeMCU, simply type them in the terminal window and hit enter to send.",
       attachTo: "#terminal",
       position: "bottom",
       offset: {
@@ -77,14 +77,14 @@
         left: null
       },
       onShow: function(){
-        isInBlockly = Espruino.Core.Code.isInBlockly();
+        isInBlockly = NodeMCU.Core.Code.isInBlockly();
         if(isInBlockly){
-          Espruino.Core.Code.switchToCode();
+          NodeMCU.Core.Code.switchToCode();
         }
       }, 
       onHide: function(){
         if(isInBlockly)
-          Espruino.Core.Code.switchToBlockly();
+          NodeMCU.Core.Code.switchToBlockly();
       }
     },
     {
@@ -93,25 +93,25 @@
       attachTo: "#icon-code",
       position: "topRight",
       onShow: function(){
-        isInBlockly = Espruino.Core.Code.isInBlockly();
+        isInBlockly = NodeMCU.Core.Code.isInBlockly();
         if(!isInBlockly){
-            Espruino.Core.Code.switchToBlockly();
+            NodeMCU.Core.Code.switchToBlockly();
         }
       }, 
       onHide: function(){
         if(!isInBlockly)
-          Espruino.Core.Code.switchToCode();
+          NodeMCU.Core.Code.switchToCode();
       }
     },
     {
       title: "Deploying your code",
-      description: "...then when your are ready, upload it to your Espruino by clicking the 'Deploy' button.",
+      description: "...then when your are ready, upload it to your NodeMCU by clicking the 'Deploy' button.",
       attachTo: "#icon-deploy",
       position: "left"
     },
     {
       title: "Go wild!",
-      description: "And those are the basics of the Espruino Web IDE.<br /><br />For more helpful guides and tutorials, be sure to checkout the <a href='http://www.espruino.com/Tutorials' target='_blank'>Tutorials</a> section on the Espruino website, or if you have any questions, why not head on over to the <a href='http://forum.espruino.com/' target='_blank'>Forums</a>.<br /><br />We hope you enjoy your Espruino!"
+      description: "And those are the basics of the NodeMCU Web IDE.<br /><br />For more helpful guides and tutorials, be sure to checkout the <a href='http://www.espruino.com/Tutorials' target='_blank'>Tutorials</a> section on the NodeMCU website, or if you have any questions, why not head on over to the <a href='http://forum.espruino.com/' target='_blank'>Forums</a>.<br /><br />We hope you enjoy your NodeMCU!"
     }
   ];
 
@@ -119,7 +119,7 @@
 
     // When finding an icon, you need to make sure your plugin
     // comes after the inital icon module.
-    var icon = Espruino.Core.App.findIcon("help");
+    var icon = NodeMCU.Core.App.findIcon("help");
     if(icon) {
       icon.addMenuItem({
         id: "tour",
@@ -150,9 +150,9 @@
 
     
     // If this is our first run, prompt about the Tour
-    Espruino.addProcessor("initialised", function(data, callback) {      
-      if (!Espruino.Config.NOT_FIRST_RUN) {
-        Espruino.Config.set("NOT_FIRST_RUN", true);         
+    NodeMCU.addProcessor("initialised", function(data, callback) {
+      if (!NodeMCU.Config.NOT_FIRST_RUN) {
+        NodeMCU.Config.set("NOT_FIRST_RUN", true);
         guiders.show("g0");
       }
       
@@ -169,13 +169,13 @@
           itm.onHide = function(){$(itm.element).click();};
           break;
         case "closePopup":
-          itm.onHide = function(){Espruino.Core.App.closePopup();};
+          itm.onHide = function(){NodeMCU.Core.App.closePopup();};
           break;
         case "sendBoard":
-          itm.onHide = function(){Espruino.Core.Serial.write(itm.source);};
+          itm.onHide = function(){NodeMCU.Core.Serial.write(itm.source);};
           break;
         case "sendEditor":
-          itm.onHide = function(){Espruino.Core.EditorJavaScript.setCode(itm.source);};
+          itm.onHide = function(){NodeMCU.Core.EditorJavaScript.setCode(itm.source);};
           break;
         case "sendAttached":
           itm.onHide = function(){
@@ -213,32 +213,32 @@
   }
   function runTour(tourUrl){
     $.getJSON(tourUrl,function(tour){
-      if (tour.needsConnection && !Espruino.Core.Serial.isConnected()) {
-        var popup = Espruino.Core.App.openPopup({
+      if (tour.needsConnection && !NodeMCU.Core.Serial.isConnected()) {
+        var popup = NodeMCU.Core.App.openPopup({
           title: "Tour can't run",
           padding: true,
-          contents: '<p>This tour needs a connection to an Espruino board</p>'+
+          contents: '<p>This tour needs a connection to an NodeMCU board</p>'+
                     '<p>Please connect your board and then click the \'Connect\' icon in the top right</p>' ,                    
           position: "center",
-          ok: function() { Espruino.Core.App.closePopup(); }
+          ok: function() { NodeMCU.Core.App.closePopup(); }
         });
-      } else if (tour.needsProjectSetting && !Espruino.Config.projectEntry) {
-        var popup = Espruino.Core.App.openPopup({
+      } else if (tour.needsProjectSetting && !NodeMCU.Config.projectEntry) {
+        var popup = NodeMCU.Core.App.openPopup({
           title: "Tour can't run",
           padding: true,
           contents: '<p>This tour needs a Project directory to be defined.</p>'+
                     '<p>Please go to <b>Settings</b>, then <b>Project</b>, and follow the <b>Project Tour</b>.</p>' ,                    
           position: "center",
-          ok: function() { Espruino.Core.App.closePopup(); }
+          ok: function() { NodeMCU.Core.App.closePopup(); }
         });      
-      } else if (tour.needsTestingSetting && !Espruino.Config.ENABLE_Testing) {
-        var popup = Espruino.Core.App.openPopup({
+      } else if (tour.needsTestingSetting && !NodeMCU.Config.ENABLE_Testing) {
+        var popup = NodeMCU.Core.App.openPopup({
           title: "Tour can't run",
           padding: true,
           contents: '<p>This tour needs Testing to be enabled.</p>'+
                     '<p>Please go to <b>Settings</b>, then <b>Testing</b>, and follow the <b>Testing Tour</b>.</p>' ,                    
           position: "center",
-          ok: function() { Espruino.Core.App.closePopup(); }
+          ok: function() { NodeMCU.Core.App.closePopup(); }
         });          
       } else {        
         prepareSlides(tour.id, tour.slides);
@@ -247,7 +247,7 @@
     });
   }
   function addTourButton(tourUrl){
-    var icon = Espruino.Core.App.findIcon("help");
+    var icon = NodeMCU.Core.App.findIcon("help");
     if(icon) {
       $.getJSON(tourUrl,function(slide){
         icon.addMenuItem({
@@ -266,7 +266,7 @@
     return x[0].tagName.toString().toLowerCase() === "input" ?
       $(x).prop("type").toLowerCase() : x[0].tagName.toLowerCase();
   };
-  Espruino.Plugins.Tour = {
+  NodeMCU.Plugins.Tour = {
     init : init,
     runTour : runTour,
     addTourButton : addTourButton

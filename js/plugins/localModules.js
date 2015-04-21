@@ -13,7 +13,7 @@
 (function(){
   
   function init() {
-    Espruino.Core.Config.add("LOCAL_MODULE_DIR", {
+    NodeMCU.Core.Config.add("LOCAL_MODULE_DIR", {
       section : "Communications",
       name : "Local Module directory",
       description : "Which local directory are modules stored in? Can be blank if there is no directory.",
@@ -21,8 +21,8 @@
       defaultValue : ""
     });
     
-    Espruino.addProcessor("getModule", function (data, callback) {
-      if (Espruino.Config.LOCAL_MODULE_DIR!="") { // Set this up in Settings
+    NodeMCU.addProcessor("getModule", function (data, callback) {
+      if (NodeMCU.Config.LOCAL_MODULE_DIR!="") { // Set this up in Settings
         // ...
         console.log("Local Module search for "+data.moduleName);
         
@@ -41,7 +41,7 @@
     });
   }
   
-  Espruino.Plugins.LocalModules = {
+  NodeMCU.Plugins.LocalModules = {
     init : init,
   };
 }());

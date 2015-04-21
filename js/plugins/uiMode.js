@@ -13,7 +13,7 @@
 (function(){
   
   function init() {
-    Espruino.Core.Config.add("UI_MODE", {
+    NodeMCU.Core.Config.add("UI_MODE", {
       section : "General",
       name : "UI Mode",
       description : "Change the display density of the UI.",
@@ -22,7 +22,7 @@
       onChange :setUiMode
     });
     
-    setUiMode(Espruino.Config.UI_MODE);
+    setUiMode(NodeMCU.Config.UI_MODE);
   }
   
   function setUiMode(mode) {
@@ -32,7 +32,7 @@
       $("body").removeClass("compact");
   }
   
-  Espruino.Plugins.UiMode = {
+  NodeMCU.Plugins.UiMode = {
     init : init,
   };
 }());

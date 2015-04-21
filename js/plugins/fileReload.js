@@ -15,7 +15,7 @@
   var icon;
   
   function init() {
-    Espruino.Core.Config.add("SHOW_RELOAD_ICON", {
+    NodeMCU.Core.Config.add("SHOW_RELOAD_ICON", {
       section : "General",
       name : "File Reload Icon",
       description : "Show an icon that allows you to reload the contents of a file that you just opened.",
@@ -24,12 +24,12 @@
       onChange : function(newValue) { showIcon(newValue); }
     });    
 
-    showIcon(Espruino.Config.SHOW_RELOAD_ICON);
+    showIcon(NodeMCU.Config.SHOW_RELOAD_ICON);
   }
 
   function showIcon(show) {
     if (show) {
-      icon = Espruino.Core.App.addIcon({ 
+      icon = NodeMCU.Core.App.addIcon({
         id: "reloadfile",
         icon: "refresh", 
         title : "Reload File", 
@@ -52,7 +52,7 @@
       $('#fileLoader').change();
   };
   
-  Espruino.Plugins.FileReload = {
+  NodeMCU.Plugins.FileReload = {
     init : init,
   };
 }());

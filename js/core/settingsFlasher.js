@@ -13,8 +13,8 @@
 (function(){
   
   function init() {
-    Espruino.Core.Config.addSection("Flasher", {
-      description : "Writing a new version of Espruino onto the board",
+    NodeMCU.Core.Config.addSection("Flasher", {
+      description : "Writing a new version of NodeMCU onto the board",
       sortOrder : 10000,
       getHTML : function(callback) {      
         $.get("/data/settings_flasher.html", function(data) {
@@ -24,22 +24,22 @@
           var chromeVer = navigator.userAgent.replace(/.*Chrome\/([0-9]*).*/,"$1");
           if (chromeVer < 32) {
             // 32 should work, but if they're going to upgrade let's suggest 33 :)
-            var info = "Your Chrome version is "+chromeVer+". Please upgrade it to 33 or newer before trying to flash your Espruino board."
+            var info = "Your Chrome version is "+chromeVer+". Please upgrade it to 33 or newer before trying to flash your NodeMCU board."
             $(".flash_info").css("color","red").html(info);
           }     
           
           // Start button
           $('.flash_start').click( function() {
-            Espruino.Core.App.closePopup();
-            Espruino.Core.MenuFlasher.showFlasher();
+            NodeMCU.Core.App.closePopup();
+            NodeMCU.Core.MenuFlasher.showFlasher();
           });
           // Advanced start
           
           $('.flash_start_advanced').click( function() {
             var url = $('.flash_url').val();
             if (url!="") {              
-              Espruino.Core.App.closePopup();
-              Espruino.Core.MenuFlasher.showFlasher( url );
+              NodeMCU.Core.App.closePopup();
+              NodeMCU.Core.MenuFlasher.showFlasher( url );
             }
           });
         });
@@ -51,7 +51,7 @@
 
   }
   
-  Espruino.Core.SettingsFlasher = {
+  NodeMCU.Core.SettingsFlasher = {
     init : init,
   };
 }());

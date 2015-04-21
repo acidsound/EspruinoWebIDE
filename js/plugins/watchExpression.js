@@ -21,52 +21,52 @@
     this.points = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   }
   function init() {
-    Espruino.Core.Config.addSection("Watch", {
+    NodeMCU.Core.Config.addSection("Watch", {
       sortOrder:600,
       description: "Watch Expressions",
       tours: { "Watch Tour":"watchExpr.json" }
     });
-    Espruino.Core.Config.add("ENABLE_Watch", {
+    NodeMCU.Core.Config.add("ENABLE_Watch", {
       section : "Watch",
       name : "Enable Watch Expression Plugin (BETA)",
-      description : "This enables popup window to watch expressions from Espruino",
+      description : "This enables popup window to watch expressions from NodeMCU",
       type : "boolean",
       defaultValue : false,
       onChange: function(newValue){showIcon(newValue);}
     });
-    Espruino.Core.Config.add("DURATION_Watch",{
+    NodeMCU.Core.Config.add("DURATION_Watch",{
       section: "Watch",
       name: "Duration to watch",
       description: "Defines maximal duration of watching",
       type: {"10000":"10 secs","60000":"Minute","300000":"5 Minutes","-1":"until_stop"},
       defaultValue : 60000
     });
-    Espruino.Core.Config.add("FREQUENCY_Watch",{
+    NodeMCU.Core.Config.add("FREQUENCY_Watch",{
       section: "Watch",
       name: "Frequency of watching",
       description: "Defines how fast watching will happen",
       type: {"200":"5/sec","500":"2/sec","1000":"1/sec","2000":"2secs","5000":"5secs","10000":"10secs"},
       defaultValue : 2000 
     });
-    Espruino.Core.Config.add("SCALE_Watch",{
+    NodeMCU.Core.Config.add("SCALE_Watch",{
       section:"Watch",
       name: "Scale",
       description: "Scaling values for watching expressions",
       type: {"":"auto","0,100":"0-100","0,1000":"0-1000","-100,100":"+-100"},
       defaultValue: "" 
     });
-    Espruino.addProcessor("getWatched", function (data, callback) {
-      if(Espruino.Config.ENABLE_Watch){
+    NodeMCU.addProcessor("getWatched", function (data, callback) {
+      if(NodeMCU.Config.ENABLE_Watch){
         if(watchRunning){setWatchValues(data);}
       }
       callback(data);
     });
-    showIcon(Espruino.Config.ENABLE_Watch);
-    Espruino.Plugins.Tour.addTourButton("data/tours/watchExpression.json");
+    showIcon(NodeMCU.Config.ENABLE_Watch);
+    NodeMCU.Plugins.Tour.addTourButton("data/tours/watchExpression.json");
   }
   function showIcon(newValue){
     if(newValue){
-      icon = Espruino.Core.App.addIcon({
+      icon = NodeMCU.Core.App.addIcon({
         id:'terminalWatch',
         icon: 'eye',
         title: 'Watch expressions',
@@ -86,8 +86,8 @@
     var html = "",i;
     html += '<table width="100%"><tr>'
     html += '<th align="left"><button class="runWatch">start</button><button class="stopWatch">stop</button></th>';
-    html += '<th align="left">Refresh: ' + Espruino.Config.FREQUENCY_Watch + "msec&nbsp;&nbsp;&nbsp;";
-    html += 'Duration: ' + Espruino.Config.DURATION_Watch + 'msec</th>';
+    html += '<th align="left">Refresh: ' + NodeMCU.Config.FREQUENCY_Watch + "msec&nbsp;&nbsp;&nbsp;";
+    html += 'Duration: ' + NodeMCU.Config.DURATION_Watch + 'msec</th>';
     html += '</table>';
     html += '<table border="1" id="detailsTable">';
     if(datapoints.length === 0){
@@ -107,7 +107,7 @@
     html += '<th><button class="addWatchpoint">Add</button>';
     html += '</tr>';
     html += '</table>';
-    Espruino.Core.App.openPopup({
+    NodeMCU.Core.App.openPopup({
       position: "relative",
       title: "Watches",
       id: "watchPopup",
@@ -121,26 +121,26 @@
   }
   function addWatchpoint(e){
     datapoints.push(new datapoint($("#newLabel").val()));
-    Espruino.Core.App.closePopup();
+    NodeMCU.Core.App.closePopup();
     openWatchPopUp();
   }
   function dropWatchpoint(e){
     datapoints.splice($(this).attr("i"),1);
-    Espruino.Core.App.closePopup();
+    NodeMCU.Core.App.closePopup();
     openWatchPopUp();
   }
   function runWatch(e){
-    if(Espruino.Core.Serial.isConnected()){
+    if(NodeMCU.Core.Serial.isConnected()){
       watchMode = $(".watchMode").filter(":checked").val();
       $(".stopWatch").button( "option", "disabled", false);
       $(".runWatch").button( "option", "disabled", true);
       watchRunning = true;
       pollData();
     }
-    else{Espruino.Core.Notifications.error("not connected");}    
+    else{NodeMCU.Core.Notifications.error("not connected");}
   }
   function stopWatch(e){
-    Espruino.Core.Serial.write('\x03clearInterval(' + intervalName + ');\ndelete ' + intervalName + ';\necho(1);\n')
+    NodeMCU.Core.Serial.write('\x03clearInterval(' + intervalName + ');\ndelete ' + intervalName + ';\necho(1);\n')
     $(".stopWatch").button( "option", "disabled", true);
     $(".runWatch").button( "option", "disabled", false);
     watchRunning = false;    
@@ -153,17 +153,17 @@
     }
     cmd += "];";
     cmd += "console.log(\"<<<<<\" + JSON.stringify(d) + \">>>>>\");";
-    cmd += "}," + Espruino.Config.FREQUENCY_Watch + ");";
-    if(Espruino.Config.DURATION_Watch>1){
+    cmd += "}," + NodeMCU.Config.FREQUENCY_Watch + ");";
+    if(NodeMCU.Config.DURATION_Watch>1){
       cmd += "var " + intervalName + "_stop=setTimeout(function(){clearInterval(" + intervalName + ");";
       cmd += "delete " + intervalName + "}"
-      cmd += "," + Espruino.Config.DURATION_Watch + ");";
+      cmd += "," + NodeMCU.Config.DURATION_Watch + ");";
     }
-    Espruino.Core.Serial.write('\x03echo(0);\n' + cmd + '\n');
+    NodeMCU.Core.Serial.write('\x03echo(0);\n' + cmd + '\n');
   }
   function setWatchValues(data){
     var i,opt,options,dataset = JSON.parse(data);
-    opt = Espruino.Config.SCALE_Watch.split(",");
+    opt = NodeMCU.Config.SCALE_Watch.split(",");
     if(opt.length>1){options = {"chartRangeMin":opt[0],"chartRangeMax":opt[1]};}
     else {options = {};}
     for(i = 0; i < dataset.length; i++){
@@ -173,7 +173,7 @@
       $("#datapoint_" + i.toString()).html(dataset[i].toString());
     }      
   }
-  Espruino.Plugins.Watch = {
+  NodeMCU.Plugins.Watch = {
     init : init
   };
 }());

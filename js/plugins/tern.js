@@ -29,7 +29,7 @@
     var server;
     var espruinoJSON;
     getURL(/*"http://ternjs.net/defs/ecma5.json"*/"/data/espruino.json", function(err, code) {
-      var codeMirror = Espruino.Core.EditorJavaScript.getCodeMirror();
+      var codeMirror = NodeMCU.Core.EditorJavaScript.getCodeMirror();
       if (err) throw new Error("Request for ecma5.json: " + err);
       espruinoJSON = code;
       server = new CodeMirror.TernServer({defs: [JSON.parse(espruinoJSON)]});
@@ -50,7 +50,7 @@
     
     /* When we connect to a board and we load its description,
      go through an add all the pins as variables so Tern cal autocomplete */ 
-    Espruino.addProcessor("boardJSONLoaded", function (data, callback) {
+    NodeMCU.addProcessor("boardJSONLoaded", function (data, callback) {
       if (espruinoJSON !== undefined) {
         var defs = JSON.parse(espruinoJSON);
         if ("pins" in data) {
@@ -89,7 +89,7 @@
     });
   }
   
-  Espruino.Plugins.Tern = {
+  NodeMCU.Plugins.Tern = {
     init : init,
   };
 }());

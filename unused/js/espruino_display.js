@@ -26,12 +26,12 @@ THE SOFTWARE.
   // <button class="display">Display</button>
   
     // simple data logger
-    Espruino["Display"] = {};
-    Espruino.Display.displayActive = false;
-    Espruino.Display.displayTimeout = 5000;
-    Espruino.Display.displayMode = "wait";
-    Espruino.Display.startMarker = ">>>";
-    Espruino.Display.endMarker = "<<<";
+    NodeMCU["Display"] = {};
+    NodeMCU.Display.displayActive = false;
+    NodeMCU.Display.displayTimeout = 5000;
+    NodeMCU.Display.displayMode = "wait";
+    NodeMCU.Display.startMarker = ">>>";
+    NodeMCU.Display.endMarker = "<<<";
     
     var displayOn = false;
     var datapoints = [];
@@ -45,19 +45,19 @@ THE SOFTWARE.
       this.points = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     }
     
-    Espruino.Display.init = function(){
+    NodeMCU.Display.init = function(){
       switchDisplay();
     };
-    Espruino.Display["initOptions"] = function(){
-      Espruino.Options.optionFields.push({id:"#displayActive",module:"Display",field:"displayActive",type:"check",onLoaded:switchDisplay,onBlur:true});
-      Espruino.Options.optionFields.push({id:"#displayTimeout",module:"Display",field:"displayTimeout",type:"text"});
-      Espruino.Options.optionFields.push({id:"#displayMode",module:"Display",field:"displayMode",type:"radio",options:["wait","poll"]});
-      Espruino.Options.optionFields.push({id:"#displayStartMarker",module:"Display",field:"startMarker",type:"text"});
-      Espruino.Options.optionFields.push({id:"#displayEndMarker",module:"Display",field:"endMarker",type:"text"});
-      Espruino.Options.optionBlocks.push({module:"Display",buttonLine:2});
+    NodeMCU.Display["initOptions"] = function(){
+      NodeMCU.Options.optionFields.push({id:"#displayActive",module:"Display",field:"displayActive",type:"check",onLoaded:switchDisplay,onBlur:true});
+      NodeMCU.Options.optionFields.push({id:"#displayTimeout",module:"Display",field:"displayTimeout",type:"text"});
+      NodeMCU.Options.optionFields.push({id:"#displayMode",module:"Display",field:"displayMode",type:"radio",options:["wait","poll"]});
+      NodeMCU.Options.optionFields.push({id:"#displayStartMarker",module:"Display",field:"startMarker",type:"text"});
+      NodeMCU.Options.optionFields.push({id:"#displayEndMarker",module:"Display",field:"endMarker",type:"text"});
+      NodeMCU.Options.optionBlocks.push({module:"Display",buttonLine:2});
     };
     function switchDisplay(){
-      if(Espruino.Display.displayActive){
+      if(NodeMCU.Display.displayActive){
         $(".display").button({ text: false, icons: { primary: "ui-icon-calculator" } }).show();
         $(".display").click(showForm);
       }
@@ -89,7 +89,7 @@ THE SOFTWARE.
       html += '<th><button class="addDatapoint">Add</button>';
       html += '</tr>';
       html += '</table>';
-      Espruino.General.ShowSubForm("displayTable",50,100,html,"#8888ff","body","displayForm");
+      NodeMCU.General.ShowSubForm("displayTable",50,100,html,"#8888ff","body","displayForm");
       $(".runDisplay").button({ text:false, icons: { primary: "ui-icon-play"} }).click(runDisplay);
       $(".stopDisplay").button({ text:false, icons: { primary: "ui-icon-stop"} }).click(stopDisplay);
       $(".stopDisplay").button('option','disabled', true);
@@ -106,7 +106,7 @@ THE SOFTWARE.
       showForm();
     }
     function runDisplay(e){
-      if(Espruino.Serial.isConnected()){
+      if(NodeMCU.Serial.isConnected()){
         switch($(".displayMode").filter(":checked").val()){
           case "wait":waitData();break;
           case "poll":pollData();break;
@@ -114,11 +114,11 @@ THE SOFTWARE.
         $(".stopDisplay").button( "option", "disabled", false);
         $(".runDisplay").button( "option", "disabled", true);
       }
-      else{Espruino.Core.Notifications.error("not connected");}
+      else{NodeMCU.Core.Notifications.error("not connected");}
     }
     function stopDisplay(e){
-      Espruino.Serial.write('\x03clearInterval(' + intervalName + ');\ndelete ' + intervalName + ';\necho(1);\n')
-      if(prevReader){Espruino.Serial.startListening(prevReader)};
+      NodeMCU.Serial.write('\x03clearInterval(' + intervalName + ');\ndelete ' + intervalName + ';\necho(1);\n')
+      if(prevReader){NodeMCU.Serial.startListening(prevReader)};
         $(".stopDisplay").button( "option", "disabled", true);
         $(".runDisplay").button( "option", "disabled", false);
     }
@@ -133,29 +133,29 @@ THE SOFTWARE.
         cmd += datapoints[i].label;
       }
       cmd += "];";
-      cmd += "console.log(\"" + Espruino.Display.startMarker + "\" + JSON.stringify(d) + \"" + Espruino.Display.endMarker + "\");";
-      cmd += "}," + Espruino.Display.displayTimeout + ");";
-      Espruino.Serial.write('\x03echo(0);\n' + cmd + '\n');
+      cmd += "console.log(\"" + NodeMCU.Display.startMarker + "\" + JSON.stringify(d) + \"" + NodeMCU.Display.endMarker + "\");";
+      cmd += "}," + NodeMCU.Display.displayTimeout + ");";
+      NodeMCU.Serial.write('\x03echo(0);\n' + cmd + '\n');
       waitData();
     }
     function waitData(){
       var bufText = "",varStart = 0, varEnd = 0, dataset,i;
-      prevReader = Espruino.Serial.startListening(function (readData){
+      prevReader = NodeMCU.Serial.startListening(function (readData){
         var bufView = new Uint8Array(readData);
         for(i = 0; i < bufView.length; i++){
           bufText += String.fromCharCode(bufView[i]);
         }
-        varStart = bufText.indexOf(Espruino.Display.startMarker);
-        varEnd = bufText.indexOf(Espruino.Display.endMarker);
+        varStart = bufText.indexOf(NodeMCU.Display.startMarker);
+        varEnd = bufText.indexOf(NodeMCU.Display.endMarker);
         if(varEnd > 0){
-          dataset = JSON.parse(bufText.substring(varStart + Espruino.Display.startMarker.length,varEnd));
+          dataset = JSON.parse(bufText.substring(varStart + NodeMCU.Display.startMarker.length,varEnd));
           for(i = 0; i < dataset.length; i++){
             datapoints[i].points.shift();
             datapoints[i].points.push(dataset[i]);
             $("#sparkline_" + i.toString()).sparkline(datapoints[i].points);
             $("#datapoint_" + i.toString()).html(dataset[i].toString());
           }
-          bufText = bufText.substr(varEnd + Espruino.Display.endMarker.length);
+          bufText = bufText.substr(varEnd + NodeMCU.Display.endMarker.length);
         }
       });
     }

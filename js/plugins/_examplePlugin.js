@@ -13,7 +13,7 @@
 (function(){
   
   function init() {
-    Espruino.Core.Config.add("MAX_FOOBARS", {
+    NodeMCU.Core.Config.add("MAX_FOOBARS", {
       section : "Communications",
       name : "Foobar Count",
       description : "How many foobars?",
@@ -23,7 +23,7 @@
     });
   }
   
-  Espruino.Plugins.ExamplePlugin = {
+  NodeMCU.Plugins.ExamplePlugin = {
     init : init,
   };
 }());

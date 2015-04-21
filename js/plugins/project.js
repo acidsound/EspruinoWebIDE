@@ -14,7 +14,7 @@
   var iconFolder,iconSnippet,actualProject = "";
   var snippets = JSON.parse('{ "Reset":"reset();","Memory":"process.memory();","ClearInterval":"clearInterval();"}');
   function init() {
-    Espruino.Core.Config.addSection("Project", {
+    NodeMCU.Core.Config.addSection("Project", {
       sortOrder:500,
       description: "Local directory used for projects, modules, etc. When you select a directory, the 'Projects' and 'Snippets' icons will appear in the main window.",
       tours: { "Project Tour":"project.json", "Snippets Tour":"projectSnippet.json" },
@@ -30,7 +30,7 @@
       }
     });
  
-    Espruino.addProcessor("getModule", function (module, callback) {
+    NodeMCU.addProcessor("getModule", function (module, callback) {
       getProjectSubDir("modules",getModules);
       var t = setTimeout(function(){callback(module);},500);
       function getModules(subDirEntry){
@@ -53,10 +53,10 @@
         callback(module);
       }
     });
-    Espruino.addProcessor("transformForEspruino", function(code, callback) {
+    NodeMCU.addProcessor("transformForEspruino", function(code, callback) {
       findBinary(code,callback);
     });
-    Espruino.addProcessor("getBinary",function(option,callback){
+    NodeMCU.addProcessor("getBinary",function(option,callback){
       getProjectSubDir("binary",function(dirEntry){
         checkFileExists(
           dirEntry,
@@ -76,23 +76,23 @@
         );
       });
     });
-    Espruino.addProcessor("getFirmware",function(url,callback){ loadFirmware(url,callback);});
-    Espruino.addProcessor("initialised",function(){
-      if(Espruino.Config.projectEntry){ 
-        chrome.fileSystem.isRestorable(Espruino.Config.projectEntry,function(bisRestorable){
-          if(!bisRestorable){ Espruino.Config.Notifications.warning("Sandbox not valid anymore");}
-          else{ checkEntry(Espruino.Config.projectEntry,function(theEntry){ updateProjectFolder(theEntry);});}
+    NodeMCU.addProcessor("getFirmware",function(url,callback){ loadFirmware(url,callback);});
+    NodeMCU.addProcessor("initialised",function(){
+      if(NodeMCU.Config.projectEntry){
+        chrome.fileSystem.isRestorable(NodeMCU.Config.projectEntry,function(bisRestorable){
+          if(!bisRestorable){ NodeMCU.Config.Notifications.warning("Sandbox not valid anymore");}
+          else{ checkEntry(NodeMCU.Config.projectEntry,function(theEntry){ updateProjectFolder(theEntry);});}
         });
       }
     });
     setTimeout(function(){
       getProjectSnippets();          
     },10);
-    showIcon(Espruino.Config.projectEntry); 
+    showIcon(NodeMCU.Config.projectEntry);
   }
   function findBinary(code,callback){ // find it in E.asmBinary(FunctionName,format,asmFunction);
     var binary = {},binarys = [];
-    var lex = Espruino.Core.Utils.getLexer(code);
+    var lex = NodeMCU.Core.Utils.getLexer(code);
     var tok = lex.next();
     var state = 0;
     var startIndex = -1;
@@ -123,7 +123,7 @@
     var i = 0;
     replaceBinary(binarys[i]);
     function replaceBinary(binary){
-      Espruino.callProcessor(
+      NodeMCU.callProcessor(
         "getBinary",
         { binary: binary, binaryCode:undefined},
         function(data){
@@ -151,8 +151,8 @@
     return l;
   }
   function sendSnippets(evt){
-    Espruino.Core.Serial.write(snippets[$(this).html()] + "\n");
-    Espruino.Core.App.closePopup();
+    NodeMCU.Core.Serial.write(snippets[$(this).html()] + "\n");
+    NodeMCU.Core.App.closePopup();
     $("#terminalfocus").focus();
   }
   function checkSubFolder(entries,subDirName){
@@ -182,13 +182,13 @@
         if(theEntry){
           chrome.fileSystem.getDisplayPath(theEntry,function(path) {            
             $("#projectEntry").val(chrome.fileSystem.retainEntry(theEntry));
-            Espruino.Config.set("projectEntry",chrome.fileSystem.retainEntry(theEntry));
+            NodeMCU.Config.set("projectEntry",chrome.fileSystem.retainEntry(theEntry));
             showLocalFolder(); // update text box + icon
             updateProjectFolder(theEntry);
           });
         } else {
           // user cancelled
-          Espruino.Config.set("projectEntry",""); // clear project entry
+          NodeMCU.Config.set("projectEntry",""); // clear project entry
           showLocalFolder(); // update text box + icon
         }
       }); 
@@ -196,24 +196,24 @@
   }
   function showLocalFolder(){
     // set whether we show the project icon or not
-    showIcon(Espruino.Config.projectEntry);
+    showIcon(NodeMCU.Config.projectEntry);
     // update the project folder text box
     $("#projectFolder").html("&nbsp;");
-    if(Espruino.Config.projectEntry){
-      chrome.fileSystem.isRestorable(Espruino.Config.projectEntry, function(bIsRestorable){
-        chrome.fileSystem.restoreEntry(Espruino.Config.projectEntry, function(theEntry) {
+    if(NodeMCU.Config.projectEntry){
+      chrome.fileSystem.isRestorable(NodeMCU.Config.projectEntry, function(bIsRestorable){
+        chrome.fileSystem.restoreEntry(NodeMCU.Config.projectEntry, function(theEntry) {
           if(theEntry){
             chrome.fileSystem.getDisplayPath(theEntry,function(path) { 
               $("#projectFolder").text(path);
             });
           }
-          else{Espruino.Core.Status.setStatus("Project not found");}
+          else{NodeMCU.Core.Status.setStatus("Project not found");}
         }); 
       });
     } 
   }
   function getProjectSnippets(){
-    if(Espruino.Config.projectEntry){
+    if(NodeMCU.Config.projectEntry){
       getProjectSubDir("snippets",function(subDirEntry){
         checkFileExists(subDirEntry,"terminalsnippets.txt",function(fileEntry){
           readFilefromEntry(fileEntry,function(data){
@@ -224,7 +224,7 @@
     }      
   }
   function getProjectSubDir(name,callback){
-    checkEntry(Espruino.Config.projectEntry,getSubTree);
+    checkEntry(NodeMCU.Config.projectEntry,getSubTree);
     function getSubTree(entry){
       var dirReader = entry.createReader();
       dirReader.readEntries (function(results) {
@@ -244,7 +244,7 @@
       chrome.fileSystem.isRestorable(entry, function(bIsRestorable){
         chrome.fileSystem.restoreEntry(entry, function(theEntry) { 
           if(theEntry){ callback(theEntry);}
-          else{Espruino.Status.setError("Project not found");}
+          else{NodeMCU.Status.setError("Project not found");}
         });
       });
     }
@@ -292,7 +292,7 @@
     });
   }
   function getProject(html,callback){
-    if(Espruino.Config.projectEntry){
+    if(NodeMCU.Config.projectEntry){
       html += '<div id="tabs">';
       html += '<ul><li><a href="#p">Projects</a></li>';
       html += '<li><a href="#m">Modules</a></li>';
@@ -316,10 +316,10 @@
   }
   function copy2SD(path,data){
     var src,i,y;
-    if(Espruino.Core.Serial.isConnected()){
+    if(NodeMCU.Core.Serial.isConnected()){
       src = 'echo(0);\n;';
       src += 'var fs = require("fs");fs.unlink("' + path + '");';
-      Espruino.Core.Serial.write(src);
+      NodeMCU.Core.Serial.write(src);
       for(i = 0; i <= data.length / 256;i++){
         y = new Uint8Array(data.buffer,i * 256,Math.min(data.length - i*256,256));
         if(i === 0){ src = 'fs.writeFile';} else{ src='fs.appendFile';}
@@ -329,15 +329,15 @@
         else{
           src += '("' + path + '",atob("' + btoa(String.fromCharCode.apply(null,y)) + '"));\n';
         }
-        Espruino.Core.Serial.write(src);
+        NodeMCU.Core.Serial.write(src);
       }
       src = 'echo(1);\n\n';
-      Espruino.Core.Serial.write(src);
-      Espruino.Core.App.closePopup();
+      NodeMCU.Core.Serial.write(src);
+      NodeMCU.Core.App.closePopup();
       $("#terminalfocus").focus();
     }
     else{
-      Espruino.Core.Notifications.error("Not Connected");
+      NodeMCU.Core.Notifications.error("Not Connected");
     }
   }
   function getSnippets(html,callback){
@@ -469,19 +469,19 @@
   }
   function projectSave(){
     actualProject.createWriter(function(fileWriter){
-      var bb = new Blob([Espruino.Core.EditorJavaScript.getCode()],{type:'text/plain'});
+      var bb = new Blob([NodeMCU.Core.EditorJavaScript.getCode()],{type:'text/plain'});
       fileWriter.truncate(bb.size);
       setTimeout(function(evt){
         fileWriter.seek(0);
         fileWriter.write(bb);
       },200);
     });
-    Espruino.Core.App.closePopup();
+    NodeMCU.Core.App.closePopup();
   }
   function projectSaveAs(){
     getProjectSubDir("projects",function(dirEntry){
-      saveFileAs(dirEntry,$("#saveAsName").val(),Espruino.Core.EditorJavaScript.getCode());
-      Espruino.Core.App.closePopup();
+      saveFileAs(dirEntry,$("#saveAsName").val(),NodeMCU.Core.EditorJavaScript.getCode());
+      NodeMCU.Core.App.closePopup();
     });
   }
   function dropSnippet(){
@@ -495,16 +495,16 @@
     snippets = snp;
     $("#s").html(getSnippetTable());
     saveSnippets();
-    Espruino.Core.App.closePopup();
+    NodeMCU.Core.App.closePopup();
   }
   function addSnippet(){
     snippets[$("#newSnippetName").val()] = $("#newSnippetValue").val();
     $("#s").html(getSnippetTable());
     saveSnippets();
-    Espruino.Core.App.closePopup();
+    NodeMCU.Core.App.closePopup();
   }
   function saveSnippets(){
-    if(Espruino.Config.projectEntry){
+    if(NodeMCU.Config.projectEntry){
       getProjectSubDir("snippets",function(subDirEntry){
         if (!subDirEntry) return;
         checkFileExists(subDirEntry,"terminalsnippets.txt",
@@ -537,10 +537,10 @@
 //$("#projectName").html(theEntry.name);
       readFilefromEntry(theEntry,copySource);
       function copySource(data){
-        Espruino.Core.EditorJavaScript.setCode(data);
+        NodeMCU.Core.EditorJavaScript.setCode(data);
       }
     }
-    Espruino.Core.App.closePopup();
+    NodeMCU.Core.App.closePopup();
   }
   function loadModule(localUrl,modulName,callback){
     //localUrl not used in this modul Loading
@@ -592,7 +592,7 @@
       readFilefromEntry(theEntry,callback);
     }
     function fileNotFound(){
-      Espruino.Core.Notifications.error("File '" + fileName + "' not found");
+      NodeMCU.Core.Notifications.error("File '" + fileName + "' not found");
     }
   }
   function loadDataUrl(fileName,callback){
@@ -605,14 +605,14 @@
       readDataUrlfromEntry(theEntry,callback);
     }
     function fileNotFound(){
-      Espruino.Core.Notifications.error("File '" + fileName + "' not found");
+      NodeMCU.Core.Notifications.error("File '" + fileName + "' not found");
     }
   }
   function saveFile(fileName,data){
     var adr = fileName.split("/");
     getProjectSubDir(adr[0],gotDir);
     function gotDir(subDirEntry){
-      if(!subDirEntry){ Espruino.Core.Notifications.error("Project directory '" + adr[0] + "' is missing");}
+      if(!subDirEntry){ NodeMCU.Core.Notifications.error("Project directory '" + adr[0] + "' is missing");}
       else{saveFileAs(subDirEntry,adr[1],data);}
     }
   }
@@ -631,12 +631,12 @@
     iconFolder = undefined;
     iconSnippet = undefined;
     if(newValue){
-      iconFolder = Espruino.Core.App.addIcon({
+      iconFolder = NodeMCU.Core.App.addIcon({
         id: 'openProjectFolder',icon: 'folder',title: 'Projects',order: 500,
         area: { name: "code",position: "top"},
         click: function(){
           getProject("",function(html){
-            Espruino.Core.App.openPopup({
+            NodeMCU.Core.App.openPopup({
               position: "relative",title: "Projects",id: "projectsTab",contents: html
             });
             setTimeout(function(){
@@ -653,7 +653,7 @@
           });
         }
       });
-      iconSnippet = Espruino.Core.App.addIcon({
+      iconSnippet = NodeMCU.Core.App.addIcon({
         id:'terminalSnippets',icon: 'snippets',title: 'Snippets',order: 500,
         area: {name: "terminal",position: "top"},
         click: function(){
@@ -662,7 +662,7 @@
             html += '<li class="terminalSnippet">' + i + '</li>';
           }
           html += '</ul>';
-          Espruino.Core.App.openPopup({
+          NodeMCU.Core.App.openPopup({
             position: "relative",title: "Snippets",id: "snippetPopup",contents: html
           });
           $(".terminalSnippet").click(sendSnippets);
@@ -674,7 +674,7 @@
     var adr = fileName.split("/");
     getProjectSubDir(adr[0],gotDir);
     function gotDir(subDirEntry){
-      if(!subDirEntry){ Espruino.Core.Notifications.error("Project directory '" + adr[0] + "' is missing");}
+      if(!subDirEntry){ NodeMCU.Core.Notifications.error("Project directory '" + adr[0] + "' is missing");}
       else{
         subDirEntry.getFile(adr[1],{create:true},function(fileEntry){
           fileEntry.createWriter(function(fileWriter){
@@ -689,7 +689,7 @@
     }
   }
   
-  Espruino.Plugins.Project = {
+  NodeMCU.Plugins.Project = {
     init : init,
     
     loadModule: loadModule,

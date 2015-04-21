@@ -13,7 +13,7 @@
 (function(){
   
   function init() {
-    Espruino.Core.Config.add("FONT_SIZE", {
+    NodeMCU.Core.Config.add("FONT_SIZE", {
       section : "General",
       name : "Font Size",
       description : "The size of font used in the Terminal and Code Editor windows",
@@ -22,14 +22,14 @@
       onChange :setFontSize
     });
     
-    setFontSize(Espruino.Config.FONT_SIZE);
+    setFontSize(NodeMCU.Config.FONT_SIZE);
   }
   
   function setFontSize(size) {
     $("#terminal,.CodeMirror").css("font-size", size+"px");
   }
   
-  Espruino.Plugins.FontSize = {
+  NodeMCU.Plugins.FontSize = {
     init : init,
   };
 }());

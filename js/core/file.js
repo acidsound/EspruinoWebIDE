@@ -20,7 +20,7 @@
     
    
     // Add stuff we need
-    Espruino.Core.App.addIcon({ 
+    NodeMCU.Core.App.addIcon({
       id: "openFile",
       icon: "folder-open", 
       title : "Open File", 
@@ -30,14 +30,14 @@
         position: "top"
       }, 
       click: function() {
-        if (Espruino.Core.Code.isInBlockly()) 
-          loadFile(Espruino.Core.EditorBlockly.setXML, currentXMLFileName);
+        if (NodeMCU.Core.Code.isInBlockly())
+          loadFile(NodeMCU.Core.EditorBlockly.setXML, currentXMLFileName);
         else
-          loadFile(Espruino.Core.EditorJavaScript.setCode, currentJSFileName);
+          loadFile(NodeMCU.Core.EditorJavaScript.setCode, currentJSFileName);
       }
     });
 
-    Espruino.Core.App.addIcon({ 
+    NodeMCU.Core.App.addIcon({
       id: "saveFile",
       icon: "save", 
       title : "Save File", 
@@ -47,16 +47,16 @@
         position: "top"
       },
       click: function() {
-        if (Espruino.Core.Code.isInBlockly()) 
-          saveFile(Espruino.Core.EditorBlockly.getXML(), currentXMLFileName);
+        if (NodeMCU.Core.Code.isInBlockly())
+          saveFile(NodeMCU.Core.EditorBlockly.getXML(), currentXMLFileName);
         else
-          saveFile(Espruino.Core.EditorJavaScript.getCode(), currentJSFileName);
+          saveFile(NodeMCU.Core.EditorJavaScript.getCode(), currentJSFileName);
       }
     });
   }
 
   function setCurrentFileName(filename) {
-    if (Espruino.Core.Code.isInBlockly()) {
+    if (NodeMCU.Core.Code.isInBlockly()) {
       currentXMLFileName = filename;
     } else { 
       currentJSFileName = filename;
@@ -65,13 +65,13 @@
   
   /**  Handle newline conversions - Windows expects newlines as /r/n when we're saving/loading files */
   function convertFromOS(chars) {
-   if (!Espruino.Core.Utils.isWindows()) return chars;
+   if (!NodeMCU.Core.Utils.isWindows()) return chars;
    return chars.replace(/\r\n/g,"\n");
   };
   
   /**  Handle newline conversions - Windows expects newlines as /r/n when we're saving/loading files */
   function convertToOS(chars) {
-   if (!Espruino.Core.Utils.isWindows()) return chars;
+   if (!NodeMCU.Core.Utils.isWindows()) return chars;
    return chars.replace(/\r\n/g,"\n").replace(/\n/g,"\r\n");
   };  
 
@@ -85,7 +85,7 @@
           callback(convertFromOS(e.target.result));
         };
         reader.onerror = function() {
-          Espruino.Core.Notifications.error("Error Loading", true);     
+          NodeMCU.Core.Notifications.error("Error Loading", true);
         };
         reader.readAsText(file);
       });
@@ -96,7 +96,7 @@
     //saveAs(new Blob([convertToOS(data)], { type: "text/plain" }), filename); // using FileSaver.min.js
 
     function errorHandler() {
-      Espruino.Core.Notifications.error("Error Saving", true);     
+      NodeMCU.Core.Notifications.error("Error Saving", true);
     }
 
     chrome.fileSystem.chooseEntry({type: 'saveFile', suggestedName:filename}, function(writableFileEntry) {
@@ -120,7 +120,7 @@
     });
   };  
 
-  Espruino.Core.File = {
+  NodeMCU.Core.File = {
     init : init
   };
 }());

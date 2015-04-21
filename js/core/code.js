@@ -16,16 +16,16 @@
 
   function init() {
     // Configuration
-    Espruino.Core.Config.add("AUTO_SAVE_CODE", {
+    NodeMCU.Core.Config.add("AUTO_SAVE_CODE", {
       section : "Communications",
       name : "Auto Save",
-      description : "Save code to Chrome's cloud storage when clicking 'Send to Espruino'?",
+      description : "Save code to Chrome's cloud storage when clicking 'Send to NodeMCU'?",
       type : "boolean",
       defaultValue : true, 
     });    
 
     // Setup code mode button
-    viewModeButton = Espruino.Core.App.addIcon({ 
+    viewModeButton = NodeMCU.Core.App.addIcon({
       id: "code",
       icon: "code", 
       title : "Switch between Code and Graphical Designer", 
@@ -37,7 +37,7 @@
       click: function() {
         if (isInBlockly()) {
           switchToCode();
-          Espruino.Core.EditorJavaScript.madeVisible();
+          NodeMCU.Core.EditorJavaScript.madeVisible();
         } else {
           switchToBlockly();
         }
@@ -45,23 +45,23 @@
     });
 
     // get code from our config area at bootup
-    Espruino.addProcessor("initialised", function(data,callback) {
+    NodeMCU.addProcessor("initialised", function(data,callback) {
       var code;
-      if (Espruino.Config.CODE) {
-        code = Espruino.Config.CODE;
+      if (NodeMCU.Config.CODE) {
+        code = NodeMCU.Config.CODE;
         console.log("Loaded code from storage.");
       } else {
         code = "var  l = false;\nsetInterval(function() {\n  l = !l;\n  LED1.write(l);\n}, 500);";
         console.log("No code in storage.");
       }
-      Espruino.Core.EditorJavaScript.setCode(code);
+      NodeMCU.Core.EditorJavaScript.setCode(code);
       callback(data);
     });
     
     
-    Espruino.addProcessor("sending", function(data, callback) {
-      if(Espruino.Config.AUTO_SAVE_CODE)
-        Espruino.Config.set("CODE", Espruino.Core.EditorJavaScript.getCode()); // save the code
+    NodeMCU.addProcessor("sending", function(data, callback) {
+      if(NodeMCU.Config.AUTO_SAVE_CODE)
+        NodeMCU.Config.set("CODE", NodeMCU.Core.EditorJavaScript.getCode()); // save the code
       callback(data);
     });
   }
@@ -83,20 +83,20 @@
   }
 
   function getEspruinoCode(callback) {
-    Espruino.callProcessor("transformForEspruino", getCurrentCode(), callback);
+    NodeMCU.callProcessor("transformForEspruino", getCurrentCode(), callback);
   }
   
   function getCurrentCode() {
     if (isInBlockly()) {
-      return Espruino.Core.EditorBlockly.getCode();
+      return NodeMCU.Core.EditorBlockly.getCode();
     } else {
-      return Espruino.Core.EditorJavaScript.getCode();
+      return NodeMCU.Core.EditorJavaScript.getCode();
     }
   }
   
-  Espruino.Core.Code = {
+  NodeMCU.Core.Code = {
     init : init,
-    getEspruinoCode : getEspruinoCode, // get the currently selected bit of code ready to send to Espruino (including Modules)
+    getEspruinoCode : getEspruinoCode, // get the currently selected bit of code ready to send to NodeMCU (including Modules)
     getCurrentCode : getCurrentCode, // get the currently selected bit of code (either blockly or javascript editor)
     isInBlockly: isInBlockly,
     switchToCode: switchToCode,

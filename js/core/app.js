@@ -28,7 +28,7 @@
   function init()
   {
     // Hookup window buttons
-    Espruino.Core.App.addIcon({
+    NodeMCU.Core.App.addIcon({
       id:'minimize',
       icon: 'minus',
       title: 'Minimize Window',
@@ -43,7 +43,7 @@
       }
     });
 
-    Espruino.Core.App.addIcon({
+    NodeMCU.Core.App.addIcon({
       id:'maximize',
       icon: 'window',
       title: 'Maximize / Restore Window',
@@ -62,7 +62,7 @@
       }
     });
 
-    Espruino.Core.App.addIcon({
+    NodeMCU.Core.App.addIcon({
       id:'close',
       icon: 'cross',
       title: 'Close Window',
@@ -86,7 +86,7 @@
 
     // Setup orientation button
     var orientation = "vertical";
-    var orientationBtn = Espruino.Core.App.addIcon({ 
+    var orientationBtn = NodeMCU.Core.App.addIcon({
       id: "orientation",
       icon: "split-" + orientation, 
       title : "Toggle Orientation", 
@@ -106,7 +106,7 @@
     });
 
     // layout after everything else has been added
-    Espruino.addProcessor("initialised", function(data,callback) {
+    NodeMCU.addProcessor("initialised", function(data,callback) {
       sortIcons();
       callback(data);
       initialised = true;
@@ -324,7 +324,7 @@
     return $("#icon-"+ id).data("api");
   }
 
-  Espruino.Core.App = {
+  NodeMCU.Core.App = {
       init : init,
       openPopup: openPopup,
       closePopup: closePopup,

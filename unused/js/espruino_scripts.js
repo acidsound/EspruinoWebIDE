@@ -26,35 +26,35 @@ THE SOFTWARE.
   
   //         <button class="scripts">Load File</button> 
 
-  Espruino["Scripts"] = {};
-  Espruino.Scripts["Tutorials"] = {
+  NodeMCU["Scripts"] = {};
+  NodeMCU.Scripts["Tutorials"] = {
       url:"https://api.github.com/repos/espruino/EspruinoDocs/git/trees/master",
       subDirs:["datasheets","devices","peripherals","tasks","tutorials"],
       fileExtensions:["md","pdf"]
   };
-  Espruino.Scripts["Examples"] = {
+  NodeMCU.Scripts["Examples"] = {
       url:"https://api.github.com/repos/espruino/EspruinoDocs/git/trees/master",
       subDirs:["examples"],
       fileExtensions:["js"]
   };
-  Espruino.Scripts["initOptions"] = function(){
-    Espruino.Options.optionFields.push({id:"#urlTutorials",module:"Scripts",object:"Tutorials",field:"url",type:"text",onBlur:true});
-    Espruino.Options.optionFields.push({id:"#subDirsTutorials",module:"Scripts",object:"Tutorials",field:"subDirs",type:"JSON",onBlur:true});
-    Espruino.Options.optionFields.push({id:"#fileExtensionsTutorials",module:"Scripts",object:"Tutorials",field:"fileExtensions",type:"JSON",onBlur:true});
-    Espruino.Options.optionFields.push({id:"#urlExamples",module:"Scripts",object:"Examples",field:"url",type:"text",onBlur:true});
-    Espruino.Options.optionFields.push({id:"#subDirsExamples",module:"Scripts",object:"Examples",field:"subDirs",type:"JSON",onBlur:true});
-    Espruino.Options.optionFields.push({id:"#fileExtensionsExamples",module:"Scripts",object:"Examples",field:"fileExtensions",type:"JSON",onBlur:true});
-    Espruino.Options.optionBlocks.push({module:"Scripts",buttonLine:1});
+  NodeMCU.Scripts["initOptions"] = function(){
+    NodeMCU.Options.optionFields.push({id:"#urlTutorials",module:"Scripts",object:"Tutorials",field:"url",type:"text",onBlur:true});
+    NodeMCU.Options.optionFields.push({id:"#subDirsTutorials",module:"Scripts",object:"Tutorials",field:"subDirs",type:"JSON",onBlur:true});
+    NodeMCU.Options.optionFields.push({id:"#fileExtensionsTutorials",module:"Scripts",object:"Tutorials",field:"fileExtensions",type:"JSON",onBlur:true});
+    NodeMCU.Options.optionFields.push({id:"#urlExamples",module:"Scripts",object:"Examples",field:"url",type:"text",onBlur:true});
+    NodeMCU.Options.optionFields.push({id:"#subDirsExamples",module:"Scripts",object:"Examples",field:"subDirs",type:"JSON",onBlur:true});
+    NodeMCU.Options.optionFields.push({id:"#fileExtensionsExamples",module:"Scripts",object:"Examples",field:"fileExtensions",type:"JSON",onBlur:true});
+    NodeMCU.Options.optionBlocks.push({module:"Scripts",buttonLine:1});
   };
 
-  Espruino.Scripts.init = function(){
+  NodeMCU.Scripts.init = function(){
     $( ".scripts" ).button({ text: false, icons: { primary: "ui-icon-script" } }).click(openSelects);
   };
   function copyScriptToEditor(){
     var url = $("#examples option:selected")[0].value;
     if(url){
       $.getJSON(url, function(data){
-        Espruino.General.setEditorCode(window.atob(data.content.replace(/(\r\n|\n|\r)/gm,"")));
+        NodeMCU.General.setEditorCode(window.atob(data.content.replace(/(\r\n|\n|\r)/gm,"")));
         $(".subform").hide();
       }).fail(function(a,b,c){console.log(a,b,c); });
     }
@@ -76,8 +76,8 @@ THE SOFTWARE.
     }       
   }
   function openSelects(e){
-    loadGitHubTrees(Espruino.Scripts.Tutorials,"tutorials",tutorialsLoaded);
-    loadGitHubTrees(Espruino.Scripts.Examples,"examples",examplesLoaded);
+    loadGitHubTrees(NodeMCU.Scripts.Tutorials,"tutorials",tutorialsLoaded);
+    loadGitHubTrees(NodeMCU.Scripts.Examples,"examples",examplesLoaded);
     $("#loader").css({'top':e.pageY,'left':e.pageX}).show();
     $(document).mouseup(function (e) {
       var loader = $("#loader");

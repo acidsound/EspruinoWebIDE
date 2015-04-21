@@ -18,11 +18,11 @@
     Blockly = blockly;
     if (blocklyWindow) {
       blocklyWindow.promptAsync = function(title,value,callback) {
-        var popup = Espruino.Core.App.openPopup({
+        var popup = NodeMCU.Core.App.openPopup({
           title: "Graphical Editor:",
           padding: true,
-          contents: '<p>'+Espruino.Core.Utils.escapeHTML(title)+'</p>'+
-                     '<input id="promptinput" value="'+Espruino.Core.Utils.escapeHTML(value)+'" style="width:100%"/>' ,                
+          contents: '<p>'+NodeMCU.Core.Utils.escapeHTML(title)+'</p>'+
+                     '<input id="promptinput" value="'+NodeMCU.Core.Utils.escapeHTML(value)+'" style="width:100%"/>' ,
           position: "center",
           next : function() {
             var value = $('#promptinput').val();
@@ -38,10 +38,10 @@
   
   function init() {
     // Config
-    Espruino.Core.Config.add("BLOCKLY_TO_JS", {
+    NodeMCU.Core.Config.add("BLOCKLY_TO_JS", {
       section : "General",
       name : "Overwrite JavaScript with Graphical Editor",
-      description : "When you click 'Send to Espruino', should the code from the Graphical Editor overwrite the JavaScript code in the editor window?",
+      description : "When you click 'Send to NodeMCU', should the code from the Graphical Editor overwrite the JavaScript code in the editor window?",
       type : "boolean",
       defaultValue : false, 
     });          
@@ -50,13 +50,13 @@
     $('<iframe id="divblockly" class="blocky" style="display:none;border:none;" src="blockly/blockly.html"></iframe>').appendTo(".editor--code .editor__canvas");
     
     // Handle the 'sending' processor so we can update the JS if we need to...
-    Espruino.addProcessor("sending", function(data, callback) {
-      if(Espruino.Config.BLOCKLY_TO_JS && Espruino.Core.Code.isInBlockly())
-        Espruino.Core.EditorJavaScript.setCode( "// Code from Graphical Editor\n"+Espruino.Core.EditorBlockly.getCode() ); 
+    NodeMCU.addProcessor("sending", function(data, callback) {
+      if(NodeMCU.Config.BLOCKLY_TO_JS && NodeMCU.Core.Code.isInBlockly())
+        NodeMCU.Core.EditorJavaScript.setCode( "// Code from Graphical Editor\n"+NodeMCU.Core.EditorBlockly.getCode() );
       callback(data);
     });
     // when we get JSON for the board, pass it to blockly
-    Espruino.addProcessor("boardJSONLoaded", function (data, callback) {
+    NodeMCU.addProcessor("boardJSONLoaded", function (data, callback) {
       if (Blockly!==undefined && Blockly.setBoardJSON!==undefined)
         Blockly.setBoardJSON(data);
       callback(data);
@@ -76,7 +76,7 @@
     Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, Blockly.Xml.textToDom(xml));
   }
   
-  Espruino.Core.EditorBlockly = {
+  NodeMCU.Core.EditorBlockly = {
     init : init,
     getCode : getCode,
     getXML : getXML,

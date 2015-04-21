@@ -13,7 +13,7 @@
 (function(){
   
   function init() {
-    Espruino.Core.App.addIcon({ 
+    NodeMCU.Core.App.addIcon({
       id: "settings",
       icon: "settings", 
       title : "Settings", 
@@ -32,7 +32,7 @@
     if (initialSection==undefined)
       initialSection = "About";
     // Get sections
-    var sections = Espruino.Core.Config.getSections();
+    var sections = NodeMCU.Core.Config.getSections();
     // Write list of sections
     var html = 
       '<div class="settings">'+
@@ -45,7 +45,7 @@
         '</div>'+
       '</div>';
     // Create the window
-    Espruino.Core.App.openPopup({
+    NodeMCU.Core.App.openPopup({
       title: "Settings",
       contents: html,
       position: "stretch",
@@ -65,14 +65,14 @@
       $(".settings .sections a[name='"+sectionName+"']").addClass("current");
       $(".tour_link").click(function(e) {
         e.preventDefault();
-        Espruino.Core.App.closePopup();
-        Espruino.Plugins.Tour.runTour("/data/tours/"+$(this).attr("tour_name"));
+        NodeMCU.Core.App.closePopup();
+        NodeMCU.Plugins.Tour.runTour("/data/tours/"+$(this).attr("tour_name"));
       });
     });
   }
   
   function getSettingsSection(sectionName, callback) {
-    var section = Espruino.Core.Config.getSection(sectionName);
+    var section = NodeMCU.Core.Config.getSection(sectionName);
     if (section===undefined) {
       console.warn("No section named "+sectionName+" found");
       callback("");
@@ -83,7 +83,7 @@
     if (section.descriptionHTML!==undefined)
       html += "<p>"+section.descriptionHTML+"<p>";
     if (section.description!==undefined)
-      html += "<p>"+Espruino.Core.Utils.escapeHTML(section.description, false).replace("\n","</p><p>") +"<p>";
+      html += "<p>"+NodeMCU.Core.Utils.escapeHTML(section.description, false).replace("\n","</p><p>") +"<p>";
     if (section.tours!==undefined) {
       html += "<p>See the ";
       var tours = [];
@@ -97,7 +97,7 @@
       html += " for more information.</p>";
     }
 
-    var configItems = Espruino.Core.Config.data;
+    var configItems = NodeMCU.Core.Config.data;
     for (var configName in configItems) {
       var configItem = configItems[configName];
       if (configItem.section == sectionName) {
@@ -117,10 +117,10 @@
      var configName = $(this).attr("name");
      if (configItems[configName] !== undefined) {
        if (configItems[configName].type == "boolean")
-         Espruino.Config.set(configName, $(this).is(':checked'));
+         NodeMCU.Config.set(configName, $(this).is(':checked'));
        else
-         Espruino.Config.set(configName, $(this).val());
-       console.log("Config."+configName+" => "+Espruino.Config[configName]);
+         NodeMCU.Config.set(configName, $(this).val());
+       console.log("Config."+configName+" => "+NodeMCU.Config[configName]);
      } else
        console.warn("Config named '"+configName+"' not found");
    });
@@ -128,26 +128,26 @@
   }
   
   function getHtmlForConfigItem(configName, config) {
-    var value = Espruino.Config[configName];
+    var value = NodeMCU.Config[configName];
     var html = 
-      '<h3>'+Espruino.Core.Utils.escapeHTML(config.name)+'</h3>';
+      '<h3>'+NodeMCU.Core.Utils.escapeHTML(config.name)+'</h3>';
     var desc = "";
     if (config.descriptionHTML!==undefined)
       desc += "<p>"+config.descriptionHTML+"<p>";
     if (config.description!==undefined)
-      desc += '<p>'+Espruino.Core.Utils.escapeHTML(config.description, false).replace("\n","</p><p>")+'</p>';
+      desc += '<p>'+NodeMCU.Core.Utils.escapeHTML(config.description, false).replace("\n","</p><p>")+'</p>';
     // type : "int"/"boolean"/"string"/{ value1:niceName, value2:niceName },
     if (config.type == "boolean") {
       html += '<input name="'+configName+'" type="checkbox" style="float: right;" '+(value?"checked":"")+'/>';
       html += desc;
     } else if (config.type == "string") {
       html += desc;
-      html += '<input name="'+configName+'" type="text" size="80" value="'+Espruino.Core.Utils.escapeHTML(value)+'"/>';
+      html += '<input name="'+configName+'" type="text" size="80" value="'+NodeMCU.Core.Utils.escapeHTML(value)+'"/>';
     } else if ((typeof config.type) == "object") {
       html += '<select name="'+configName+'" style="float: right;">';
       for (var key in config.type)
-        html += '<option value="'+Espruino.Core.Utils.escapeHTML(key)+'" '+(key==value?"selected":"")+'>'+
-                  Espruino.Core.Utils.escapeHTML(config.type[key])+
+        html += '<option value="'+NodeMCU.Core.Utils.escapeHTML(key)+'" '+(key==value?"selected":"")+'>'+
+                  NodeMCU.Core.Utils.escapeHTML(config.type[key])+
                 '</option>';
       html += '</select>';
       html += desc;
@@ -157,7 +157,7 @@
     return html;
   }
   
-  Espruino.Core.MenuSettings = {
+  NodeMCU.Core.MenuSettings = {
     init : init,
     
     show : createSettingsWindow,

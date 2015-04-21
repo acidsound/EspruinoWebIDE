@@ -1,6 +1,6 @@
 // **Welcome to Espruino!**
 //
-// Espruino lets you write commands interactively using a shell (It's also called a REPL).
+// NodeMCU lets you write commands interactively using a shell (It's also called a REPL).
 //
 // When you press 'Enter' after typing a command, it is executed and the result is returned.
 // 

@@ -38,8 +38,8 @@
       progressMax = progress;
     }
 
-    //if(Espruino.Core.Status.statusSoundOn) {Espruino.Core.Status.sendSound("status"); }
-    //if(Espruino.Core.Status.statusSpeakOn) {Espruino.Core.Status.speak(text); }
+    //if(NodeMCU.Core.Status.statusSoundOn) {NodeMCU.Core.Status.sendSound("status"); }
+    //if(NodeMCU.Core.Status.statusSpeakOn) {NodeMCU.Core.Status.speak(text); }
   };
 
   function hasProgress() {
@@ -53,7 +53,7 @@
     $(".status__progress-bar").css("width", progressPercent + "%");
   };  
   
-  Espruino.Core.Status = {
+  NodeMCU.Core.Status = {
       init : init,
       setStatus : setStatus,
       hasProgress : hasProgress,

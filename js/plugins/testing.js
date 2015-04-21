@@ -69,8 +69,8 @@
         cmd = this.expression + ';';
         break;
     }
-    if (Espruino.Core.Serial.isConnected()) {
-      Espruino.Core.Serial.write('\x03echo(0);\n' + cmd + '\necho(1);\n');
+    if (NodeMCU.Core.Serial.isConnected()) {
+      NodeMCU.Core.Serial.write('\x03echo(0);\n' + cmd + '\necho(1);\n');
     } else {
       notification("E","nc");
     }
@@ -189,7 +189,7 @@
         }
       }
     }
-    this.speak = function(t){ if(t !== "") Espruino.Plugins.Notification_Sound.speak(t);};
+    this.speak = function(t){ if(t !== "") NodeMCU.Plugins.Notification_Sound.speak(t);};
     this.clear = function(){ canvas.clearCanvas(); };
     this.drawAlarm = function(d,v){
       var s,c;
@@ -260,7 +260,7 @@
         var x,y;
         x = parseInt(e.offsetX * 1000 / p.width(),0);
         y = parseInt(e.offsetY * 1000 / p.height(),0);
-        if(Espruino.Core.Serial.isConnected()){
+        if(NodeMCU.Core.Serial.isConnected()){
           action(x,y);
         }
         else{
@@ -292,10 +292,10 @@
       default: t = "Sorry, unknown message (pnt="+pnt+")";break;
     }
     switch(type){
-      case "E": Espruino.Core.Notifications.error(t);break;
-      case "W": Espruino.Core.Notifications.warning(t);break;
-      case "I": Espruino.Core.Notifications.info(t);break;
-      default: Espruino.Core.Notifications.info(t);break;
+      case "E": NodeMCU.Core.Notifications.error(t);break;
+      case "W": NodeMCU.Core.Notifications.warning(t);break;
+      case "I": NodeMCU.Core.Notifications.info(t);break;
+      default: NodeMCU.Core.Notifications.info(t);break;
     }
   }
   
@@ -309,33 +309,33 @@
   }
 
   function init() {
-    Espruino.Core.Config.addSection("Testing", {
+    NodeMCU.Core.Config.addSection("Testing", {
       sortOrder:600,
       description: "Displays a graph of values over time",
       getHTML: function(callback){
         var url,html;
         url = "https://www.youtube.com/playlist?list=PLWusBqvaPOec0RJ-_iqPkvCAeKYyIb6mH;";
         html = '<h3>Videos on youtube</h3>';
-        html += 'Some videos are available on playlist for <a href="' + url + '" target="_blank">Espruino Testing</a>';
+        html += 'Some videos are available on playlist for <a href="' + url + '" target="_blank">NodeMCU Testing</a>';
         callback(html);
       },
       tours: { "Testing Tour":"testing.json", "Extended Testing Tour":"testingExt.json" }
     });
-    Espruino.Core.Config.add("ENABLE_Testing", {
+    NodeMCU.Core.Config.add("ENABLE_Testing", {
       section : "Testing",
       name : "Enable Testing Plugin (BETA)",
-      description : "This enables window to test application on Espruino",
+      description : "This enables window to test application on NodeMCU",
       type : "boolean",
       defaultValue : false,
       onChange: function(newValue){showIcon(newValue);}
     });
-    Espruino.addProcessor("getWatched", function (data, callback) {
-      if(Espruino.Config.ENABLE_Testing){
+    NodeMCU.addProcessor("getWatched", function (data, callback) {
+      if(NodeMCU.Config.ENABLE_Testing){
         if(polling){setTestingValues(data);}
       }
       callback(data);
     });
-    Espruino.addProcessor("disconnected",function(data, callback){
+    NodeMCU.addProcessor("disconnected",function(data, callback){
       if(polling){stopGetExpression();}
       callback(data);
     });
@@ -343,7 +343,7 @@
       position: "absolute",display: "none",border: "1px solid #fdd",
       padding: "2px","background-color": "#fee",opacity: 0.80
     }).appendTo("body");
-    showIcon(Espruino.Config.ENABLE_Testing);
+    showIcon(NodeMCU.Config.ENABLE_Testing);
     $('<div id="divTesting" class="Testing" style="display:none;border:none;height:100%;width:100%;"></div>').appendTo(".editor--terminal .editor__canvas");
     loadInitial(resetForm);
     function resetForm(){ showDataPoints();showActionPoints(); }
@@ -382,7 +382,7 @@
         +   '<tr><td><button class="saveTestingBtn">Save</button></td></tr>'
         + '</table>'
         ;
-      Espruino.Core.App.openPopup({
+      NodeMCU.Core.App.openPopup({
         position: "relative",
         title: "Save Testing as",
         id: "savetestingTab",
@@ -401,8 +401,8 @@
       imageUrl:imageUrl,testMode:testMode,frequency:frequency,activePoll:activePoll,
       testDescription:testDescription,testProject:testProject,
       debug:testDebug,dataPoints:datapoints,actionPoints:actionpoints };
-    Espruino.Plugins.Project.saveFile("testing/" + fileName + ".json",JSON.stringify(dt,null,2));
-    Espruino.Core.App.closePopup();      
+    NodeMCU.Plugins.Project.saveFile("testing/" + fileName + ".json",JSON.stringify(dt,null,2));
+    NodeMCU.Core.App.closePopup();
   } // /testingSaveAsDo
   
   function loadTesting() {
@@ -420,8 +420,8 @@
         ;
       var footer = '</table>';
       // loadDirHtml|getProjectTable(html,subDir,ext,header,row,footer,callback){...
-      Espruino.Plugins.Project.loadDirHtml("","testing","JSON",header,row,footer,function(html){
-        Espruino.Core.App.openPopup({
+      NodeMCU.Plugins.Project.loadDirHtml("","testing","JSON",header,row,footer,function(html){
+        NodeMCU.Core.App.openPopup({
               position: "relative",
               title: "Load Testing",
               id: "loadtestingTab",
@@ -438,19 +438,19 @@
   function loadTestingFile() {
     var fileName = $(this).attr("filename");
     newTestingFile(fileName,loadProject);
-    Espruino.Core.App.closePopup();
+    NodeMCU.Core.App.closePopup();
   }
   
   function loadProject() {
     if(testProject !== ""){
-      Espruino.Plugins.Project.loadFile("projects/" + testProject + ".js",function(data){
-        Espruino.Core.EditorJavaScript.setCode(data);
+      NodeMCU.Plugins.Project.loadFile("projects/" + testProject + ".js",function(data){
+        NodeMCU.Core.EditorJavaScript.setCode(data);
       });            
     }
   }
   
   function newTestingFile(fileName,callback){
-    Espruino.Plugins.Project.loadFile("testing/" + fileName,function(data){
+    NodeMCU.Plugins.Project.loadFile("testing/" + fileName,function(data){
       var i,dt = JSON.parse(data);
       datapoints = [];
       for(i = 0; i < dt.dataPoints.length; i++){ datapoints.push(new Datapoint(dt.dataPoints[i]));}
@@ -487,7 +487,7 @@
     html +=         '<th width="75%"><textarea id="testDescription"';
     html +=           ' cols="35" rows="3"></textarea></th></tr>';
     html +=       '<tr><th title="optional .jpg file in testing folder">Image .jpg</th><th id="imageUrl">';
-    html += Espruino.Plugins.Project.loadDirHtml(html,"testing","JPG",
+    html += NodeMCU.Plugins.Project.loadDirHtml(html,"testing","JPG",
                       '<select id="imageUrlList"><option>- none -</option>',
                       '<option>$name',
                       '</select>',
@@ -496,7 +496,7 @@
       html +=     '<tr><th>Interval (secs)</th><th><input type="text" size="5" id="testingFrequency"></th></tr>';
       html +=     '<tr><th>Active Poll</th><th><input type="checkbox" id="testPollActive"></th></tr>';
       html +=     '<tr><th title="optional .js file in projects folder">Project .js</th><th id="projectUrl">';
-      html += Espruino.Plugins.Project.loadDirHtml(html,"projects","JS",
+      html += NodeMCU.Plugins.Project.loadDirHtml(html,"projects","JS",
                       '<select id="projectUrlList"><option>- none -</option>',
                       '<option>$name',
                       '</select>',
@@ -507,7 +507,7 @@
           html +=   '<tr><th colspan="2" style="border-top:1px #CFCFCF solid;"><button id="hideAndStoreTestingPropertiesBtn">OK</button></th></tr>';
         }
         html += '</table>';
-        Espruino.Core.App.openPopup({
+        NodeMCU.Core.App.openPopup({
           position: "relative",
           title: "Testing Properties" + ((polling) ? " (view only)" : ""),
           id: "testingPropertiesList",contents: html
@@ -533,7 +533,7 @@
     activePoll = $("#testPollActive")[0].checked;
     testProject = ((val = $("#projectUrlList").val()) == '- none -') ? "" : val.split(".")[0];
     testDebug = $("#testDebug")[0].checked;
-    Espruino.Core.App.closePopup();  
+    NodeMCU.Core.App.closePopup();
   }
   
   function switchLogging(){
@@ -542,8 +542,8 @@
   }
 
   function openTestingLog(){
-    var url = "data/app/openTestingLog.html?entry=" + Espruino.Config.projectEntry.split(":")[0];
-    url += "&directory=" + Espruino.Config.projectEntry.split(":")[1];
+    var url = "data/app/openTestingLog.html?entry=" + NodeMCU.Config.projectEntry.split(":")[0];
+    url += "&directory=" + NodeMCU.Config.projectEntry.split(":")[1];
     chrome.app.window.create(url, {innerBounds: {width: 620,height: 430}}); 
   }
 
@@ -691,7 +691,7 @@
       setTimeout(function(){
         h = t[0].clientHeight;w = t[0].clientWidth;
         $("#divImage").css({"height":h + "px","width":w + "px"});
-        Espruino.Plugins.Project.loadDataUrl("testing/" + url,showImage);
+        NodeMCU.Plugins.Project.loadDataUrl("testing/" + url,showImage);
       },50);
     },"html");
     function showImage(dataUrl){
@@ -736,7 +736,7 @@
     html += '<tr><th colspan="3" align="center">Actions</th></tr>';
     for(i = 0; i < actionpoints.length;i++){ html += actionpoints[i].getSetxyHtml(i); }
     html += '</table>';
-    Espruino.Core.App.openPopup({
+    NodeMCU.Core.App.openPopup({
       position: "relative",title: "Assign to Item",id: "pointList",contents: html
     });
     setTimeout(function(){
@@ -750,13 +750,13 @@
         datapoints[i]["x"] = x;
         datapoints[i]["y"] = y;
         datapoints[i]["display"] = $("#DPid_" + i).val();
-        Espruino.Core.App.closePopup();
+        NodeMCU.Core.App.closePopup();
       });
       $(".ap_class").unbind().click(function(){
         i = parseInt($(this).attr("pnt"));      
         actionpoints[i]["x"] = x;
         actionpoints[i]["y"] = y;
-        Espruino.Core.App.closePopup();
+        NodeMCU.Core.App.closePopup();
       });
     },50);
   }
@@ -776,10 +776,10 @@
 
   function runGetExpression(){
     var s,d = new Date();
-    if(Espruino.Core.Serial.isConnected()){
+    if(NodeMCU.Core.Serial.isConnected()){
       $("#testingExpressionStop").button( "option", "disabled", false);
       $("#testingExpressionRun").button( "option", "disabled", true);
-      Espruino.Core.Serial.write("echo(0);\n");
+      NodeMCU.Core.Serial.write("echo(0);\n");
       if(activePoll){ pollData(); }
       polling = true;
       if(testLogging === true){
@@ -791,7 +791,7 @@
           s += '{"label":"' + datapoints[i].label + '","type":"' + datapoints[i].type + '"}';
         }
         s += ']}\n]';
-        Espruino.Plugins.Project.appendFile(testLoggingName,s);
+        NodeMCU.Plugins.Project.appendFile(testLoggingName,s);
       }
     }
     else{notification("E","nc");}    
@@ -799,11 +799,11 @@
   
   function stopGetExpression(){
     if(activePoll){ clearInterval(pollPnt)};
-    Espruino.Core.Serial.write("echo(1);\n");
+    NodeMCU.Core.Serial.write("echo(1);\n");
     $("#testingExpressionStop").button( "option", "disabled", true);
     $("#testingExpressionRun").button( "option", "disabled", false); 
     polling = false;
-    Espruino.Core.Serial.write("echo(1);\n");   
+    NodeMCU.Core.Serial.write("echo(1);\n");
   }
   
   function showFlotCharts(){
@@ -851,7 +851,7 @@
     utc = new Date().getTime();
     dt = JSON.parse(data);
     if(testLogging === true){
-      Espruino.Plugins.Project.appendFile(testLoggingName,',{"UTC":' + utc + ',"data":' + data + "}\n]");
+      NodeMCU.Plugins.Project.appendFile(testLoggingName,',{"UTC":' + utc + ',"data":' + data + "}\n]");
     }
     if(typeof dt === "object"){
       for(i in dt){
@@ -879,17 +879,17 @@
     cmd += "};\n";
     cmd += "console.log(\"<<<<<\" + JSON.stringify(d) + \">>>>>\");\n";
     cmd += "}\n";
-    Espruino.Core.Serial.write(cmd);
+    NodeMCU.Core.Serial.write(cmd);
     if(pollPnt){clearInterval(pollPnt);}
     pollPnt = setInterval(function(){
       cmd = intervalName + "();\n";
-      Espruino.Core.Serial.write(cmd);
+      NodeMCU.Core.Serial.write(cmd);
     },frequency * 1000);
   }
 
   function showIcon(newValue){
     if(newValue){
-      icon = Espruino.Core.App.addIcon({
+      icon = NodeMCU.Core.App.addIcon({
         id:'terminalTesting',
         icon: 'code',
         title: 'Switch to testing page',
@@ -909,7 +909,7 @@
   function openTestingWindow(){
     if (isInTesting()) {
       switchToCode();
-      Espruino.Core.EditorJavaScript.madeVisible();
+      NodeMCU.Core.EditorJavaScript.madeVisible();
     } 
     else { switchToTesting();}
   }
@@ -930,7 +930,7 @@
     return $("#divTesting").is(":visible");
   }
   
-  Espruino.Plugins.Testing = {
+  NodeMCU.Plugins.Testing = {
     init : init
   };
   

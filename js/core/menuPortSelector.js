@@ -17,7 +17,7 @@
   
   function init() 
   {
-    connectButton = Espruino.Core.App.addIcon({ 
+    connectButton = NodeMCU.Core.App.addIcon({
       id: "connection",
       icon: "connect", 
       title : "Connect / Disconnect", 
@@ -29,19 +29,19 @@
       click: toggleConnection
     });
     
-    Espruino.addProcessor("connected", function(data, callback) {
+    NodeMCU.addProcessor("connected", function(data, callback) {
       connectButton.setIcon("disconnect");
       callback(data);
     });
 
-    Espruino.addProcessor("disconnected", function(data, callback) {
+    NodeMCU.addProcessor("disconnected", function(data, callback) {
       connectButton.setIcon("connect");
       callback(data);
     });    
   }
  
   function toggleConnection() {
-    if (Espruino.Core.Serial.isConnected()) {
+    if (NodeMCU.Core.Serial.isConnected()) {
       disconnect();
     } else {
       createPortSelector();
@@ -52,7 +52,7 @@
     var checkInt, popup;
 
     function selectPort() {
-      Espruino.Core.Status.setStatus("Connecting...");
+      NodeMCU.Core.Status.setStatus("Connecting...");
       connectToPort($(this).data("port"), function(success){
         if(success){
           popup.close();
@@ -63,7 +63,7 @@
     }
 
     function getPorts() {
-      Espruino.Core.Serial.getPorts(function(items) {
+      NodeMCU.Core.Serial.getPorts(function(items) {
 
         if (items.toString() == lastContents) 
           return; // same... don't update
@@ -96,7 +96,7 @@
     // force update
     lastContents = undefined;
     // Launch the popup
-    popup = Espruino.Core.App.openPopup({
+    popup = NodeMCU.Core.App.openPopup({
       title: "Select a port...",
       contents: "Loading...",
       position: "center",
@@ -124,24 +124,24 @@
   function connectToPort(serialPort, callback) 
   {
     if (!serialPort) {
-      Espruino.Core.Notifications.error("Invalid Serial Port");
+      NodeMCU.Core.Notifications.error("Invalid Serial Port");
       return;
     }
 
-    Espruino.Core.Serial.setSlowWrite(true);
-    Espruino.Core.Serial.open(serialPort, function(cInfo) {
+    NodeMCU.Core.Serial.setSlowWrite(true);
+    NodeMCU.Core.Serial.open(serialPort, function(cInfo) {
       if (cInfo!=undefined) {
         console.log("Device found (connectionId="+ cInfo.connectionId +")");        
-        Espruino.Core.Notifications.success("Connected to port "+ serialPort, true);
+        NodeMCU.Core.Notifications.success("Connected to port "+ serialPort, true);
         callback(true);
       } else {
         // fail
-        Espruino.Core.Notifications.error("Connection Failed.", true);
+        NodeMCU.Core.Notifications.error("Connection Failed.", true);
         callback(false);
       }
     }, function () {
       console.log("Force disconnect");
-      Espruino.Core.Notifications.warning("Disconnected", true);
+      NodeMCU.Core.Notifications.warning("Disconnected", true);
       disconnect();
     });
 
@@ -150,7 +150,7 @@
   /** If we're connected, call callback, otherwise put up a connection dialog.
    * If connection succeeds, call callback - otherwise don't */
   function ensureConnected(callback) {
-    if (Espruino.Core.Serial.isConnected()) {
+    if (NodeMCU.Core.Serial.isConnected()) {
       callback(); // great - we're done!
     } else {
       createPortSelector(callback);
@@ -159,10 +159,10 @@
 
   function disconnect()
   {
-    Espruino.Core.Serial.close();
+    NodeMCU.Core.Serial.close();
   }
   
-  Espruino.Core.MenuPortSelector = {
+  NodeMCU.Core.MenuPortSelector = {
       init : init,
       
       ensureConnected : ensureConnected,

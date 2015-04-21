@@ -20,7 +20,7 @@
     if (urlOrNothing=="") urlOrNothing=undefined;
     
     if (!urlOrNothing) {
-      var env = Espruino.Core.Env.getData();
+      var env = NodeMCU.Core.Env.getData();
       if (env!==undefined &&
           env.info!==undefined &&
           env.info.binary_url!==undefined) {
@@ -35,7 +35,7 @@
   function stepSelectBoard( urlOrNothing ) {
     var boardList;
     
-    var popup = Espruino.Core.App.openPopup({
+    var popup = NodeMCU.Core.App.openPopup({
       title: "Firmware Update",
       padding: true,
       contents: '<p>We need to find out which board you have. Please select from the list below and click next...</p>'+
@@ -57,7 +57,7 @@
       }
     });
     
-    Espruino.Core.Env.getBoardList(function(data) {
+    NodeMCU.Core.Env.getBoardList(function(data) {
       var html = "<red>Error loading boards...</red>";      
       if (data) {
         boardList = data;
@@ -100,7 +100,7 @@
     }
     html += "</select>";
     // Crearte popup
-    var popup = Espruino.Core.App.openPopup({
+    var popup = NodeMCU.Core.App.openPopup({
       title: "Firmware Update",
       padding: true,
       contents: '<p>Your board has multiple options for firmware. Please select from the list below and click next...</p>'+
@@ -125,9 +125,9 @@
   
   
   function stepReset(data) {
-    Espruino.Core.MenuPortSelector.disconnect();
+    NodeMCU.Core.MenuPortSelector.disconnect();
     
-    var popup = Espruino.Core.App.openPopup({
+    var popup = NodeMCU.Core.App.openPopup({
       title: "Firmware Update",
       padding: true,
       contents: getDocs(data, "reset"),                
@@ -140,11 +140,11 @@
   }
   
   function stepFlash(data) {
-    Espruino.Core.MenuPortSelector.ensureConnected(function() {
+    NodeMCU.Core.MenuPortSelector.ensureConnected(function() {
       console.log("stepFlash: ",data);
       var url = data.binary_url;
       
-      var popup = Espruino.Core.App.openPopup({
+      var popup = NodeMCU.Core.App.openPopup({
         title: "Firmware Update",
         padding: true,
         contents: '<p><b>Your firmware is now being updated</b>...</p>'+
@@ -152,17 +152,17 @@
         position: "center",
       });
     
-      Espruino.Core.Flasher.flashDevice(url ,function (err) {
-        Espruino.Core.Terminal.grabSerialPort();
-        Espruino.Core.MenuPortSelector.disconnect();
+      NodeMCU.Core.Flasher.flashDevice(url ,function (err) {
+        NodeMCU.Core.Terminal.grabSerialPort();
+        NodeMCU.Core.MenuPortSelector.disconnect();
         popup.close();
         if (err) {
-          Espruino.Core.Notifications.error("Error Flashing: "+ err, true);        
+          NodeMCU.Core.Notifications.error("Error Flashing: "+ err, true);
           console.log(err);
           stepError(err);
         } else {        
-          Espruino.Core.Notifications.success("Flashing Complete", true);
-          Espruino.callProcessor("flashComplete");
+          NodeMCU.Core.Notifications.success("Flashing Complete", true);
+          NodeMCU.callProcessor("flashComplete");
           stepSuccess(data);
         }
       });
@@ -170,7 +170,7 @@
   }
   
   function stepSuccess(data) {
-    var popup = Espruino.Core.App.openPopup({
+    var popup = NodeMCU.Core.App.openPopup({
       title: "Firmware Update",
       padding: true,
       contents: '<p><b>The Firmware was updated successfully!</b><p>'+
@@ -183,7 +183,7 @@
   }  
   
   function stepError(err) {
-    var popup = Espruino.Core.App.openPopup({
+    var popup = NodeMCU.Core.App.openPopup({
       title: "Firmware Update",
       padding: true,
       contents: '<p><b>Sorry, the firmware update has failed.</b></p>'+
@@ -216,7 +216,7 @@
           '<p>Please unplug the Pico and plug it back in to exit bootloader mode, then click Next to start using it!</p>';
       } else {        
         html = 
-          '<p>Please press the RST button to reset the Espruino out of bootloader mode, then click Next to start using it!</p>';
+          '<p>Please press the RST button to reset the NodeMCU out of bootloader mode, then click Next to start using it!</p>';
       }
     } 
     if (!html) {
@@ -226,7 +226,7 @@
     return html;
   }
   
-  Espruino.Core.MenuFlasher = {
+  NodeMCU.Core.MenuFlasher = {
       init : init,
       
       showFlasher : showFlasher
