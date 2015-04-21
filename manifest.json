@@ -23,7 +23,7 @@
   ],
   "manifest_version": 2,
   "url_handlers": {
-    "espruino_code": {
+    "nodemcu_code": {
       "title": "Load code into the Espruino Web IDE",
       "matches": [
         "http://www.espruino.com/webide*"

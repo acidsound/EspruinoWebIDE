@@ -4,16 +4,16 @@
  This Source Code is subject to the terms of the Mozilla Public
  License, v2.0. If a copy of the MPL was not distributed with this
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
- 
+
  ------------------------------------------------------------------
   Blockly blocks for Espruino
  ------------------------------------------------------------------
-**/    
+**/
 
 // --------------------------------- Blockly init code - see /js/core/editorBlockly.js
 window.onload = function() {
   Blockly.inject(document.body,{path: '', toolbox: document.getElementById('toolbox')});
-  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, document.getElementById('blocklyInitial')); 
+  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, document.getElementById('blocklyInitial'));
   window.parent.blocklyLoaded(Blockly, window); // see core/editorBlockly.js
 };
 // When we have JSON from the board, use it to
@@ -23,7 +23,7 @@ Blockly.setBoardJSON = function(info) {
   if (!("pins" in info)) return;
   if (!("devices" in info)) return;
   PINS = [];
-  var i,s; 
+  var i,s;
   for (i=1;i<8;i++) {
     s = "LED"+i;
     if (s in info.devices) PINS.push([s,s]);
@@ -34,12 +34,12 @@ Blockly.setBoardJSON = function(info) {
   }
   for (i in info.pins)
     PINS.push([info.pins[i].name, info.pins[i].name]);
-  
-  
+
+
 };
 // ---------------------------------
 
-var ESPRUINO_COL = 190;
+var NODEMCU_COL = 190;
 
 var PORTS = ["A","B","C"];
 var PINS = [
@@ -53,7 +53,7 @@ for (var p in PORTS)
     PINS.push([pinname,pinname]);
   }
 
-Blockly.Blocks.espruino_timeout = {
+Blockly.Blocks.nodemcu_timeout = {
   category: 'NodeMCU',
   init: function() {
       this.appendValueInput('SECONDS')
@@ -66,12 +66,12 @@ Blockly.Blocks.espruino_timeout = {
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(ESPRUINO_COL);
+    this.setColour(NODEMCU_COL);
     this.setInputsInline(true);
     this.setTooltip('Waits for a certain period before running code');
   }
 };
-Blockly.Blocks.espruino_interval = {
+Blockly.Blocks.nodemcu_interval = {
   category: 'NodeMCU',
   init: function() {
       this.appendValueInput('SECONDS')
@@ -84,16 +84,16 @@ Blockly.Blocks.espruino_interval = {
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(ESPRUINO_COL);
+    this.setColour(NODEMCU_COL);
     this.setInputsInline(true);
     this.setTooltip('Runs code repeatedly, every so many seconds');
   }
 };
 
-Blockly.Blocks.espruino_pin = {
+Blockly.Blocks.nodemcu_pin = {
 //      category: 'NodeMCU',
   init: function() {
-    
+
     var start = 0;
     var incrementStep = 10;
     var originalPin = undefined;
@@ -101,27 +101,27 @@ Blockly.Blocks.espruino_pin = {
       originalPin = this.value_;
       var list = PINS.slice(start, start+incrementStep);
       if (start>0) list.unshift(['Back...', 'Back']);
-      if (start+incrementStep<PINS.length) list.push(['More...', 'More']);        
+      if (start+incrementStep<PINS.length) list.push(['More...', 'More']);
       return list;
-    };    
-    
+    };
+
     var pinSelector = new Blockly.FieldDropdown(listGen, function(selection){
       var ret = undefined;
-      
-      if (selection == "More" || selection == "Back") {  
+
+      if (selection == "More" || selection == "Back") {
         if (selection == "More")
           start += incrementStep;
         else
           start -= incrementStep;
-        
+
         var t = this;
         setTimeout(function(){t.showEditor_();},1);
 
         return originalPin;
-      }      
+      }
     });
-    
-    this.setColour(ESPRUINO_COL);
+
+    this.setColour(NODEMCU_COL);
     this.setOutput(true, 'Pin');
     this.appendDummyInput().appendField(pinSelector, 'PIN');
     this.setTooltip('The Name of a Pin');
@@ -129,7 +129,7 @@ Blockly.Blocks.espruino_pin = {
 };
 
 
-Blockly.Blocks.espruino_watch = {
+Blockly.Blocks.nodemcu_watch = {
   category: 'NodeMCU',
   init: function() {
       this.appendValueInput('PIN')
@@ -142,7 +142,7 @@ Blockly.Blocks.espruino_watch = {
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(ESPRUINO_COL);
+    this.setColour(NODEMCU_COL);
     this.setInputsInline(true);
     this.setTooltip('Runs code when an input changes');
   },
@@ -153,7 +153,7 @@ EDGES: [
 };
 
 
-Blockly.Blocks.espruino_getTime = {
+Blockly.Blocks.nodemcu_getTime = {
     category: 'NodeMCU',
     init: function() {
       this.appendDummyInput().appendField('Time');
@@ -165,7 +165,7 @@ Blockly.Blocks.espruino_getTime = {
   };
 
 
-Blockly.Blocks.espruino_digitalWrite = {
+Blockly.Blocks.nodemcu_digitalWrite = {
   category: 'NodeMCU',
   init: function() {
       this.appendValueInput('PIN')
@@ -177,12 +177,12 @@ Blockly.Blocks.espruino_digitalWrite = {
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setColour(ESPRUINO_COL);
+    this.setColour(NODEMCU_COL);
     this.setInputsInline(true);
     this.setTooltip('Writes a Digital Value to a Pin');
   }
 };
-Blockly.Blocks.espruino_digitalPulse = {
+Blockly.Blocks.nodemcu_digitalPulse = {
     category: 'NodeMCU',
     init: function() {
         this.appendValueInput('PIN')
@@ -196,12 +196,12 @@ Blockly.Blocks.espruino_digitalPulse = {
 
       this.setPreviousStatement(true);
       this.setNextStatement(true);
-      this.setColour(ESPRUINO_COL);
+      this.setColour(NODEMCU_COL);
       this.setInputsInline(true);
       this.setTooltip('Pulses a pin for the given number of milliseconds');
     }
   };
-Blockly.Blocks.espruino_digitalRead = {
+Blockly.Blocks.nodemcu_digitalRead = {
   category: 'NodeMCU',
   init: function() {
       this.appendValueInput('PIN')
@@ -209,13 +209,13 @@ Blockly.Blocks.espruino_digitalRead = {
           .appendField('digitalRead Pin');
 
     this.setOutput(true, 'Boolean');
-    this.setColour(ESPRUINO_COL);
+    this.setColour(NODEMCU_COL);
     this.setInputsInline(true);
     this.setTooltip('Read a Digital Value from a Pin');
   }
 };
 
-Blockly.Blocks.espruino_analogWrite = {
+Blockly.Blocks.nodemcu_analogWrite = {
     category: 'NodeMCU',
     init: function() {
         this.appendValueInput('PIN')
@@ -227,12 +227,12 @@ Blockly.Blocks.espruino_analogWrite = {
 
       this.setPreviousStatement(true);
       this.setNextStatement(true);
-      this.setColour(ESPRUINO_COL);
+      this.setColour(NODEMCU_COL);
       this.setInputsInline(true);
       this.setTooltip('Writes an Analog Value to a Pin');
     }
   };
-Blockly.Blocks.espruino_analogRead = {
+Blockly.Blocks.nodemcu_analogRead = {
     category: 'NodeMCU',
     init: function() {
         this.appendValueInput('PIN')
@@ -240,83 +240,83 @@ Blockly.Blocks.espruino_analogRead = {
             .appendField('analogRead Pin');
 
       this.setOutput(true, 'Number');
-      this.setColour(ESPRUINO_COL);
+      this.setColour(NODEMCU_COL);
       this.setInputsInline(true);
       this.setTooltip('Read an Analog Value from a Pin');
     }
   };
 
-Blockly.Blocks.espruino_code = {
+Blockly.Blocks.nodemcu_code = {
     category: 'NodeMCU',
     init: function() {
       this.appendDummyInput().appendField(new Blockly.FieldTextArea("// Enter JavaScript Code Here"),"CODE");
 
       this.setPreviousStatement(true);
       this.setNextStatement(true);
-      this.setColour(ESPRUINO_COL);
+      this.setColour(NODEMCU_COL);
       this.setInputsInline(true);
       this.setTooltip('Executes the given JavaScript code');
     }
   };
 // -----------------------------------------------------------------------------------
 
-Blockly.JavaScript.text_print = function() {
-  var argument0 = Blockly.JavaScript.valueToCode(this, 'TEXT',
-      Blockly.JavaScript.ORDER_NONE) || '\'\'';
+Blockly.Lua.text_print = function() {
+  var argument0 = Blockly.Lua.valueToCode(this, 'TEXT',
+      Blockly.Lua.ORDER_NONE) || '\'\'';
   return 'print(' + argument0 + ');\n';
 };
-Blockly.JavaScript.espruino_timeout = function() {
-  var seconds = Blockly.JavaScript.valueToCode(this, 'SECONDS',
-      Blockly.JavaScript.ORDER_ASSIGNMENT) || '1';
-  var branch = Blockly.JavaScript.statementToCode(this, 'DO');
+Blockly.Lua.nodemcu_timeout = function() {
+  var seconds = Blockly.Lua.valueToCode(this, 'SECONDS',
+      Blockly.Lua.ORDER_ASSIGNMENT) || '1';
+  var branch = Blockly.Lua.statementToCode(this, 'DO');
   return "setTimeout(function() {\n"+branch+" }, "+seconds+"*1000.0);\n";
 };
-Blockly.JavaScript.espruino_getTime = function() {
-  return ["getTime()\n", Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.Lua.nodemcu_getTime = function() {
+  return ["getTime()\n", Blockly.Lua.ORDER_ATOMIC];
 };
-Blockly.JavaScript.espruino_interval = function() {
-  var seconds = Blockly.JavaScript.valueToCode(this, 'SECONDS',
-      Blockly.JavaScript.ORDER_ASSIGNMENT) || '1';
-  var branch = Blockly.JavaScript.statementToCode(this, 'DO');
+Blockly.Lua.nodemcu_interval = function() {
+  var seconds = Blockly.Lua.valueToCode(this, 'SECONDS',
+      Blockly.Lua.ORDER_ASSIGNMENT) || '1';
+  var branch = Blockly.Lua.statementToCode(this, 'DO');
   return "setInterval(function() {\n"+branch+" }, "+seconds+"*1000.0);\n";
 };
-Blockly.JavaScript.espruino_pin = function() {
+Blockly.Lua.nodemcu_pin = function() {
   var code = this.getTitleValue('PIN');
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+  return [code, Blockly.Lua.ORDER_ATOMIC];
 };
-Blockly.JavaScript.espruino_watch = function() {
-  var pin = Blockly.JavaScript.valueToCode(this, 'PIN', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+Blockly.Lua.nodemcu_watch = function() {
+  var pin = Blockly.Lua.valueToCode(this, 'PIN', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
   var edge = this.getTitleValue('EDGE');
-  var branch = Blockly.JavaScript.statementToCode(this, 'DO');
+  var branch = Blockly.Lua.statementToCode(this, 'DO');
   var json = { repeat : true, edge : edge };
   if (pin=="BTN1") json.debounce = 10;
   return "setWatch(function() {\n"+branch+" }, "+pin+", "+JSON.stringify(json)+");\n";
 };
-Blockly.JavaScript.espruino_digitalWrite = function() {
-  var pin = Blockly.JavaScript.valueToCode(this, 'PIN', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  var val = Blockly.JavaScript.valueToCode(this, 'VAL', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+Blockly.Lua.nodemcu_digitalWrite = function() {
+  var pin = Blockly.Lua.valueToCode(this, 'PIN', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
+  var val = Blockly.Lua.valueToCode(this, 'VAL', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
   return "digitalWrite("+pin+", "+val+");\n";
 };
-Blockly.JavaScript.espruino_digitalPulse = function() {
-  var pin = Blockly.JavaScript.valueToCode(this, 'PIN', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  var val = Blockly.JavaScript.valueToCode(this, 'VAL', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  var tim = Blockly.JavaScript.valueToCode(this, 'TIME', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+Blockly.Lua.nodemcu_digitalPulse = function() {
+  var pin = Blockly.Lua.valueToCode(this, 'PIN', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
+  var val = Blockly.Lua.valueToCode(this, 'VAL', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
+  var tim = Blockly.Lua.valueToCode(this, 'TIME', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
   return "digitalPulse("+pin+", "+val+", "+tim+");\n";
 };
-Blockly.JavaScript.espruino_digitalRead = function() {
-  var pin = Blockly.JavaScript.valueToCode(this, 'PIN', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  return ["digitalRead("+pin+")\n", Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.Lua.nodemcu_digitalRead = function() {
+  var pin = Blockly.Lua.valueToCode(this, 'PIN', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
+  return ["digitalRead("+pin+")\n", Blockly.Lua.ORDER_ATOMIC];
 };
-Blockly.JavaScript.espruino_analogWrite = function() {
-  var pin = Blockly.JavaScript.valueToCode(this, 'PIN', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  var val = Blockly.JavaScript.valueToCode(this, 'VAL', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  return "analogWrite("+pin+", "+val+");\n";
+Blockly.Lua.nodemcu_analogWrite = function() {
+  var pin = Blockly.Lua.valueToCode(this, 'PIN', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
+  var val = Blockly.Lua.valueToCode(this, 'VAL', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
+  return "pwm.setduty("+pin+", "+val+")\n";
 };
-Blockly.JavaScript.espruino_analogRead = function() {
-  var pin = Blockly.JavaScript.valueToCode(this, 'PIN', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  return ["analogRead("+pin+")\n", Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.Lua.nodemcu_analogRead = function() {
+  var pin = Blockly.Lua.valueToCode(this, 'PIN', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
+  return ["adc.read("+pin+")\n", Blockly.Lua.ORDER_ATOMIC];
 };
-Blockly.JavaScript.espruino_code = function() {
-  var code = JSON.stringify(this.getFieldValue("CODE"));
-  return "eval("+code+");\n";
+Blockly.Lua.nodemcu_code = function() {
+  var code = this.getFieldValue("CODE");
+  return code;
 };

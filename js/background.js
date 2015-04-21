@@ -21,7 +21,7 @@ chrome.app.runtime.onLaunched.addListener(function(launchData) {
     // ---------------------------------------------------------- URL LAUNCH
     if (launchData.id) {
       // We are called to handle a URL that matches one of our url_handlers.
-      if (launchData.id === 'espruino_code') {
+      if (launchData.id === 'nodemcu_code') {
        if (win.contentWindow.NodeMCU!==undefined && win.contentWindow.NodeMCU.initialised==true) {
           win.contentWindow.NodeMCU.Plugins.URLHandler.handle(launchData.url);
         } else {
