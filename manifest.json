@@ -1,7 +1,7 @@
 {
-  "name": "Espruino Web IDE",
-  "short_name": "Espruino IDE",
-  "description": "A Terminal and Graphical code Editor for Espruino JavaScript Microcontrollers",
+  "name": "NodeMCU Web IDE",
+  "short_name": "NodeMCU IDE",
+  "description": "A Terminal and Graphical code Editor for NodeMCU JavaScript Microcontrollers",
   "version": "0.53.0",
   "app": {
     "background": {
@@ -24,9 +24,9 @@
   "manifest_version": 2,
   "url_handlers": {
     "nodemcu_code": {
-      "title": "Load code into the Espruino Web IDE",
+      "title": "Load code into the NodeMCU Web IDE",
       "matches": [
-        "http://www.espruino.com/webide*"
+        "http://www.NodeMCU.com/webide*"
       ]
     }
   }
