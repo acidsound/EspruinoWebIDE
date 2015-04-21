@@ -3,3 +3,4 @@ EspruinoSerialTerminal.zip
 .settings
 *~
 .idea/
+.DS_Store

@@ -27,12 +27,12 @@
     }
   
     var server;
-    var espruinoJSON;
-    getURL(/*"http://ternjs.net/defs/ecma5.json"*/"/data/espruino.json", function(err, code) {
+    var nodemcuJSON;
+    getURL("/data/nodemcu.json", function(err, code) {
       var codeMirror = NodeMCU.Core.EditorJavaScript.getCodeMirror();
       if (err) throw new Error("Request for ecma5.json: " + err);
-      espruinoJSON = code;
-      server = new CodeMirror.TernServer({defs: [JSON.parse(espruinoJSON)]});
+      nodemcuJSON = code;
+      server = new CodeMirror.TernServer({defs: [JSON.parse(nodemcuJSON)]});
       var k = codeMirror.getOption("extraKeys");
       var nk = {
         "Ctrl-Space": function(cm) { server.smartComplete(cm); }, 
@@ -51,8 +51,8 @@
     /* When we connect to a board and we load its description,
      go through an add all the pins as variables so Tern cal autocomplete */ 
     NodeMCU.addProcessor("boardJSONLoaded", function (data, callback) {
-      if (espruinoJSON !== undefined) {
-        var defs = JSON.parse(espruinoJSON);
+      if (nodemcuJSON !== undefined) {
+        var defs = JSON.parse(nodemcuJSON);
         if ("pins" in data) {
           data.pins.forEach(function(pin) {
             var functions = [];
