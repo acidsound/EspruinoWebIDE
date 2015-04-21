@@ -249,13 +249,13 @@ Blockly.Blocks.nodemcu_analogRead = {
 Blockly.Blocks.nodemcu_code = {
     category: 'NodeMCU',
     init: function() {
-      this.appendDummyInput().appendField(new Blockly.FieldTextArea("// Enter JavaScript Code Here"),"CODE");
+      this.appendDummyInput().appendField(new Blockly.FieldTextArea("// Enter Lua Code Here"),"CODE");
 
       this.setPreviousStatement(true);
       this.setNextStatement(true);
       this.setColour(NODEMCU_COL);
       this.setInputsInline(true);
-      this.setTooltip('Executes the given JavaScript code');
+      this.setTooltip('Executes the given Lua code');
     }
   };
 // -----------------------------------------------------------------------------------
@@ -263,13 +263,13 @@ Blockly.Blocks.nodemcu_code = {
 Blockly.Lua.text_print = function() {
   var argument0 = Blockly.Lua.valueToCode(this, 'TEXT',
       Blockly.Lua.ORDER_NONE) || '\'\'';
-  return 'print(' + argument0 + ');\n';
+  return 'print(' + argument0 + ')\n';
 };
 Blockly.Lua.nodemcu_timeout = function() {
   var seconds = Blockly.Lua.valueToCode(this, 'SECONDS',
       Blockly.Lua.ORDER_ASSIGNMENT) || '1';
   var branch = Blockly.Lua.statementToCode(this, 'DO');
-  return "setTimeout(function() {\n"+branch+" }, "+seconds+"*1000.0);\n";
+  return "setTimeout(function() {\n"+branch+" }, "+seconds+"*1000.0)\n";
 };
 Blockly.Lua.nodemcu_getTime = function() {
   return ["getTime()\n", Blockly.Lua.ORDER_ATOMIC];
@@ -278,7 +278,7 @@ Blockly.Lua.nodemcu_interval = function() {
   var seconds = Blockly.Lua.valueToCode(this, 'SECONDS',
       Blockly.Lua.ORDER_ASSIGNMENT) || '1';
   var branch = Blockly.Lua.statementToCode(this, 'DO');
-  return "setInterval(function() {\n"+branch+" }, "+seconds+"*1000.0);\n";
+  return "setInterval(function() {\n"+branch+" }, "+seconds+"*1000.0)\n";
 };
 Blockly.Lua.nodemcu_pin = function() {
   var code = this.getTitleValue('PIN');
@@ -290,18 +290,18 @@ Blockly.Lua.nodemcu_watch = function() {
   var branch = Blockly.Lua.statementToCode(this, 'DO');
   var json = { repeat : true, edge : edge };
   if (pin=="BTN1") json.debounce = 10;
-  return "setWatch(function() {\n"+branch+" }, "+pin+", "+JSON.stringify(json)+");\n";
+  return "setWatch(function() {\n"+branch+" }, "+pin+", "+JSON.stringify(json)+")\n";
 };
 Blockly.Lua.nodemcu_digitalWrite = function() {
   var pin = Blockly.Lua.valueToCode(this, 'PIN', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
   var val = Blockly.Lua.valueToCode(this, 'VAL', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
-  return "digitalWrite("+pin+", "+val+");\n";
+  return "digitalWrite("+pin+", "+val+")\n";
 };
 Blockly.Lua.nodemcu_digitalPulse = function() {
   var pin = Blockly.Lua.valueToCode(this, 'PIN', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
   var val = Blockly.Lua.valueToCode(this, 'VAL', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
   var tim = Blockly.Lua.valueToCode(this, 'TIME', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
-  return "digitalPulse("+pin+", "+val+", "+tim+");\n";
+  return "digitalPulse("+pin+", "+val+", "+tim+")\n";
 };
 Blockly.Lua.nodemcu_digitalRead = function() {
   var pin = Blockly.Lua.valueToCode(this, 'PIN', Blockly.Lua.ORDER_ASSIGNMENT) || '0';
