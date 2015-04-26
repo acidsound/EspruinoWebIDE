@@ -23,7 +23,7 @@
   }
 
   function writeToNodeMCU(code) {
-    code = reformatCode(code);
+    code = reformatCode(code)+'\n';
     
     var realSendSerial = function(data) {
       console.log("Sending... "+data);
@@ -136,6 +136,6 @@
   
   NodeMCU.Core.CodeWriter = {
     init : init,
-    writeToNodeMCU : writeToNodeMCU,
+    writeToNodeMCU : writeToNodeMCU
   };
 }());

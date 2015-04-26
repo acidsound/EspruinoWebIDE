@@ -157,6 +157,8 @@ Author: Gordon Williams (gw@pur3.co.uk)
                     writeData=undefined;
                 }
             } else {
+                writeSerialDirect(str);
+                if (showStatus) NodeMCU.Core.Status.setStatus("Sent");
                 writeTimeout=undefined;
                 writeData=undefined;
             }
