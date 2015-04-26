@@ -175,7 +175,7 @@
           itm.onHide = function(){NodeMCU.Core.Serial.write(itm.source);};
           break;
         case "sendEditor":
-          itm.onHide = function(){NodeMCU.Core.EditorJavaScript.setCode(itm.source);};
+          itm.onHide = function(){NodeMCU.Core.EditorLUA.setCode(itm.source);};
           break;
         case "sendAttached":
           itm.onHide = function(){

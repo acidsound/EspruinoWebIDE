@@ -469,7 +469,7 @@
   }
   function projectSave(){
     actualProject.createWriter(function(fileWriter){
-      var bb = new Blob([NodeMCU.Core.EditorJavaScript.getCode()],{type:'text/plain'});
+      var bb = new Blob([NodeMCU.Core.EditorLUA.getCode()],{type:'text/plain'});
       fileWriter.truncate(bb.size);
       setTimeout(function(evt){
         fileWriter.seek(0);
@@ -480,7 +480,7 @@
   }
   function projectSaveAs(){
     getProjectSubDir("projects",function(dirEntry){
-      saveFileAs(dirEntry,$("#saveAsName").val(),NodeMCU.Core.EditorJavaScript.getCode());
+      saveFileAs(dirEntry,$("#saveAsName").val(),NodeMCU.Core.EditorLUA.getCode());
       NodeMCU.Core.App.closePopup();
     });
   }
@@ -537,7 +537,7 @@
 //$("#projectName").html(theEntry.name);
       readFilefromEntry(theEntry,copySource);
       function copySource(data){
-        NodeMCU.Core.EditorJavaScript.setCode(data);
+        NodeMCU.Core.EditorLUA.setCode(data);
       }
     }
     NodeMCU.Core.App.closePopup();

@@ -6,7 +6,7 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
  ------------------------------------------------------------------
-  CodeMirror JavaScript editor
+  CodeMirror LUA editor
  ------------------------------------------------------------------
 **/
 "use strict";
@@ -67,7 +67,7 @@
     }
   }
   
-  NodeMCU.Core.EditorJavaScript = {
+  NodeMCU.Core.EditorLUA = {
     init : init,
     getCode : getCode,
     setCode : setCode,

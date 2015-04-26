@@ -444,7 +444,7 @@
   function loadProject() {
     if(testProject !== ""){
       NodeMCU.Plugins.Project.loadFile("projects/" + testProject + ".js",function(data){
-        NodeMCU.Core.EditorJavaScript.setCode(data);
+        NodeMCU.Core.EditorLUA.setCode(data);
       });            
     }
   }
@@ -909,7 +909,7 @@
   function openTestingWindow(){
     if (isInTesting()) {
       switchToCode();
-      NodeMCU.Core.EditorJavaScript.madeVisible();
+      NodeMCU.Core.EditorLUA.madeVisible();
     } 
     else { switchToTesting();}
   }

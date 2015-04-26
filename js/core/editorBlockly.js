@@ -52,7 +52,7 @@
     // Handle the 'sending' processor so we can update the JS if we need to...
     NodeMCU.addProcessor("sending", function(data, callback) {
       if(NodeMCU.Config.BLOCKLY_TO_JS && NodeMCU.Core.Code.isInBlockly())
-        NodeMCU.Core.EditorJavaScript.setCode( "// Code from Graphical Editor\n"+NodeMCU.Core.EditorBlockly.getCode() );
+        NodeMCU.Core.EditorLUA.setCode( "// Code from Graphical Editor\n"+NodeMCU.Core.EditorBlockly.getCode() );
       callback(data);
     });
     // when we get JSON for the board, pass it to blockly

@@ -33,7 +33,7 @@
         if (NodeMCU.Core.Code.isInBlockly())
           loadFile(NodeMCU.Core.EditorBlockly.setXML, currentXMLFileName);
         else
-          loadFile(NodeMCU.Core.EditorJavaScript.setCode, currentJSFileName);
+          loadFile(NodeMCU.Core.EditorLUA.setCode, currentJSFileName);
       }
     });
 
@@ -50,7 +50,7 @@
         if (NodeMCU.Core.Code.isInBlockly())
           saveFile(NodeMCU.Core.EditorBlockly.getXML(), currentXMLFileName);
         else
-          saveFile(NodeMCU.Core.EditorJavaScript.getCode(), currentJSFileName);
+          saveFile(NodeMCU.Core.EditorLUA.getCode(), currentJSFileName);
       }
     });
   }

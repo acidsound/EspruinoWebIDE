@@ -29,7 +29,7 @@
     var server;
     var nodemcuJSON;
     getURL("/data/nodemcu.json", function(err, code) {
-      var codeMirror = NodeMCU.Core.EditorJavaScript.getCodeMirror();
+      var codeMirror = NodeMCU.Core.EditorLUA.getCodeMirror();
       if (err) throw new Error("Request for ecma5.json: " + err);
       nodemcuJSON = code;
       server = new CodeMirror.TernServer({defs: [JSON.parse(nodemcuJSON)]});

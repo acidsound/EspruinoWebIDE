@@ -37,7 +37,7 @@
       click: function() {
         if (isInBlockly()) {
           switchToCode();
-          NodeMCU.Core.EditorJavaScript.madeVisible();
+          NodeMCU.Core.EditorLUA.madeVisible();
         } else {
           switchToBlockly();
         }
@@ -54,14 +54,14 @@
         code = "var  l = false;\nsetInterval(function() {\n  l = !l;\n  LED1.write(l);\n}, 500);";
         console.log("No code in storage.");
       }
-      NodeMCU.Core.EditorJavaScript.setCode(code);
+      NodeMCU.Core.EditorLUA.setCode(code);
       callback(data);
     });
     
     
     NodeMCU.addProcessor("sending", function(data, callback) {
       if(NodeMCU.Config.AUTO_SAVE_CODE)
-        NodeMCU.Config.set("CODE", NodeMCU.Core.EditorJavaScript.getCode()); // save the code
+        NodeMCU.Config.set("CODE", NodeMCU.Core.EditorLUA.getCode()); // save the code
       callback(data);
     });
   }
@@ -90,7 +90,7 @@
     if (isInBlockly()) {
       return NodeMCU.Core.EditorBlockly.getCode();
     } else {
-      return NodeMCU.Core.EditorJavaScript.getCode();
+      return NodeMCU.Core.EditorLUA.getCode();
     }
   }
   

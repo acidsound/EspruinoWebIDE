@@ -20,27 +20,27 @@
     NodeMCU.Core.Code.switchToCode(); // if in blockly
     switch(key){
       case "code":
-        NodeMCU.Core.EditorJavaScript.setCode(val);
+        NodeMCU.Core.EditorLUA.setCode(val);
         break;
       case "upload":
         NodeMCU.Core.MenuPortSelector.ensureConnected(function() {
           NodeMCU.Core.Terminal.focus(); // give the terminal focus
           NodeMCU.callProcessor("sending");
           NodeMCU.Core.CodeWriter.writeToEspruino(val);
-          NodeMCU.Core.EditorJavaScript.setCode(val);
+          NodeMCU.Core.EditorLUA.setCode(val);
         });        
         break;
       case "gist":
-        NodeMCU.Core.EditorJavaScript.setCode("Loading...");
+        NodeMCU.Core.EditorLUA.setCode("Loading...");
         $.getJSON("https://api.github.com/gists/"+ val, function(data){
           if(data && data.files){
             var keys = Object.keys(data.files);
             if(keys.length > 0){
-              NodeMCU.Core.EditorJavaScript.setCode(data.files[keys[0]].content);
+              NodeMCU.Core.EditorLUA.setCode(data.files[keys[0]].content);
             }
           }
         }).error(function(){
-          NodeMCU.Core.EditorJavaScript.setCode("ERROR");
+          NodeMCU.Core.EditorLUA.setCode("ERROR");
         });
         break;
     }
