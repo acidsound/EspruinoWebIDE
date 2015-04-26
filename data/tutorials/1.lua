@@ -5,15 +5,17 @@
 // When you press 'Enter' after typing a command, it is executed and the result is returned.
 // 
 // Let's try it now. We'll do a simple sum. Just type the following:
-1+2
+=1+2
 
-// This returned the result after the equals sign: ```=3```
+// This returned the result after the equals sign: ```3```
 //
 // But we can also write commands that don't return anything. Type the following
 // in order to turn LED1 (the red light) on:
-digitalWrite(LED1,1)
+gpio.mode(4, gpio.OUTPUT)
+gpio.write(4, gpio.HIGH)
+=gpio.read(4)
 
-// This returned ```=undefined``` because digitalWrite does not return a value,
+// This returned ```0``` because digitalWrite does not return a value,
 // but the red light should have lit up.
 //
 // You can turn the green and blue LEDs on using LED2 and LED3 respectively.

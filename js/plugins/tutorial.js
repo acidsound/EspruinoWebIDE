@@ -37,7 +37,7 @@
         click: function(){
           if (!hasTutorial()) {
             NodeMCU.Core.MenuPortSelector.ensureConnected(function() {
-              loadTutorialURL(TUTORIALS_DIR+"1.js");        
+              loadTutorialURL(TUTORIALS_DIR+"1.lua");
             });
           } else {
             stopTutorial(); 
