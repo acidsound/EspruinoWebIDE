@@ -68,7 +68,7 @@
   
   function isInBlockly() { // TODO: we should really enumerate views - we might want another view?
     return $("#divblockly").is(":visible");
-  };
+  }
 
   function switchToBlockly() {
     $("#divcode").hide();
@@ -82,8 +82,8 @@
     viewModeButton.setIcon("code");
   }
 
-  function getEspruinoCode(callback) {
-    NodeMCU.callProcessor("transformForEspruino", getCurrentCode(), callback);
+  function getNodeMCUCode(callback) {
+    NodeMCU.callProcessor("transformForNodeMCU", getCurrentCode(), callback);
   }
   
   function getCurrentCode() {
@@ -96,7 +96,7 @@
   
   NodeMCU.Core.Code = {
     init : init,
-    getEspruinoCode : getEspruinoCode, // get the currently selected bit of code ready to send to NodeMCU (including Modules)
+    getNodeMCUCode : getNodeMCUCode, // get the currently selected bit of code ready to send to NodeMCU (including Modules)
     getCurrentCode : getCurrentCode, // get the currently selected bit of code (either blockly or javascript editor)
     isInBlockly: isInBlockly,
     switchToCode: switchToCode,

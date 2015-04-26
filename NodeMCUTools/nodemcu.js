@@ -21,8 +21,8 @@ var NodeMCU;
    * Common processors are:
    *
    *   sending              - sending code to NodeMCU (no data)
-   *   transformForEspruino - transform code ready to be sent to NodeMCU
-   *   transformModuleForEspruino - transform module code before it's sent to NodeMCU with Modules.addCached (we only do this if we don't think it's been minified before)
+   *   transformForNodeMCU - transform code ready to be sent to NodeMCU
+   *   transformModuleForNodeMCU - transform module code before it's sent to NodeMCU with Modules.addCached (we only do this if we don't think it's been minified before)
    *   connected            - connected to NodeMCU (no data)
    *   disconnected         - disconnected from NodeMCU (no data)
    *   environmentVar       - Board's process.env loaded (object to be saved into NodeMCU.Env.environmentData)

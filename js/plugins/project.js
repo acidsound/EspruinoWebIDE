@@ -53,7 +53,7 @@
         callback(module);
       }
     });
-    NodeMCU.addProcessor("transformForEspruino", function(code, callback) {
+    NodeMCU.addProcessor("transformForNodeMCU", function(code, callback) {
       findBinary(code,callback);
     });
     NodeMCU.addProcessor("getBinary",function(option,callback){

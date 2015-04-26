@@ -6,7 +6,7 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
  ------------------------------------------------------------------
-  Blockly blocks for Espruino
+  Blockly blocks for NodeMCU
  ------------------------------------------------------------------
 **/
 

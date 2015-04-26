@@ -6,7 +6,7 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
  ------------------------------------------------------------------
-  Actual low-level code for flashing Espruino Devices
+  Actual low-level code for flashing NodeMCU Devices
  ------------------------------------------------------------------
 **/
 "use strict";

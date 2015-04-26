@@ -287,7 +287,7 @@
   
   function init() {
     // When code is sent to NodeMCU, search it for modules and add extra code required to load them
-    NodeMCU.addProcessor("transformForEspruino", function(code, callback) {
+    NodeMCU.addProcessor("transformForNodeMCU", function(code, callback) {
       findASMBlocks(code, callback);
     });
   }

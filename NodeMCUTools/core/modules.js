@@ -29,7 +29,7 @@
     });    
     
     // When code is sent to NodeMCU, search it for modules and add extra code required to load them
-    NodeMCU.addProcessor("transformForEspruino", function(code, callback) {
+    NodeMCU.addProcessor("transformForNodeMCU", function(code, callback) {
       loadModules(code, callback);
     });
   }
@@ -93,7 +93,7 @@
     if (alreadyMinified)
       loadProcessedModule(data);
     else
-      NodeMCU.callProcessor("transformModuleForEspruino", data, loadProcessedModule);
+      NodeMCU.callProcessor("transformModuleForNodeMCU", data, loadProcessedModule);
   }      
   
   /** Given a module name (which could be a URL), try and find it. Return

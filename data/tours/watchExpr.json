@@ -4,7 +4,7 @@
 "slides":
 [ {
     "title": "Watch expressions",
-    "description": "Quick tour to watch expressions from Espruino in popup"
+    "description": "Quick tour to watch expressions from NodeMCU in popup"
   },
   { "title": "Condition",
     "description": "this tour will run perfect, if<ul><li>watch is diabled in options</li><li>IDE is connected to a board</li></ul>"

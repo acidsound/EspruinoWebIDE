@@ -22,7 +22,7 @@
     });
   }
 
-  function writeToEspruino(code) {  
+  function writeToNodeMCU(code) {
     code = reformatCode(code);
     
     var realSendSerial = function(data) {
@@ -34,7 +34,7 @@
     // If we're supposed to reset NodeMCU before sending...
     if (NodeMCU.Config.RESET_BEFORE_SEND) {
       sendSerial = function(data) { 
-        // reset espruino
+        // reset NodeMCU
         //NodeMCU.Core.Serial.write("node.restart()\n");
         // wait for the reset
         setTimeout(function() {
@@ -46,7 +46,7 @@
     // We want to make sure we've got a prompt before sending. If not,
     // this will issue a Ctrl+C
     var sendSerialAfterPrompt = function(data) {
-      NodeMCU.Core.Utils.getEspruinoPrompt(function() {
+      NodeMCU.Core.Utils.getNodeMCUPrompt(function() {
         sendSerial(data);
       });
     };
@@ -136,6 +136,6 @@
   
   NodeMCU.Core.CodeWriter = {
     init : init,
-    writeToEspruino : writeToEspruino,
+    writeToNodeMCU : writeToNodeMCU,
   };
 }());

@@ -6,7 +6,7 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
  ------------------------------------------------------------------
-  Automatically minify code before it is sent to Espruino
+  Automatically minify code before it is sent to NodeMCU
  ------------------------------------------------------------------
 **/
 "use strict";
@@ -37,9 +37,9 @@
     });
     
     // When code is sent to NodeMCU, search it for modules and add extra code required to load them
-    NodeMCU.addProcessor("transformForEspruino", minifyEspruino);
+    NodeMCU.addProcessor("transformForNodeMCU", minifyNodeMCU);
    // When code is sent to NodeMCU, search it for modules and add extra code required to load them
-    NodeMCU.addProcessor("transformModuleForEspruino", minifyModule);
+    NodeMCU.addProcessor("transformModuleForNodeMCU", minifyModule);
   }
   
   function closureCompiler(code, minificationLevel, output_info, callback) {
@@ -83,7 +83,7 @@
     });
   }
 
-  function minifyEspruino(code, callback) {
+  function minifyNodeMCU(code, callback) {
     if (NodeMCU.Config.MINIFICATION_LEVEL != "") {
       // if we've been asked to minify...
       minifyCode(code, callback, NodeMCU.Config.MINIFICATION_LEVEL);

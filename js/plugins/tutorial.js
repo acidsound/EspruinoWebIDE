@@ -6,7 +6,7 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
  ------------------------------------------------------------------
-  The Espruino tutorial
+  The NodeMCU tutorial
  ------------------------------------------------------------------
 **/
 "use strict";

@@ -6,7 +6,7 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
  ------------------------------------------------------------------
-  "Send to Espruino" implementation
+  "Send to NodeMCU" implementation
  ------------------------------------------------------------------
 **/
 "use strict";
@@ -27,7 +27,7 @@
         NodeMCU.Core.MenuPortSelector.ensureConnected(function() {
           NodeMCU.Core.Terminal.focus(); // give the terminal focus
           NodeMCU.callProcessor("sending");
-          NodeMCU.Core.Code.getEspruinoCode(NodeMCU.Core.CodeWriter.writeToEspruino);
+          NodeMCU.Core.Code.getNodeMCUCode(NodeMCU.Core.CodeWriter.writeToNodeMCU);
         });
       }
     });

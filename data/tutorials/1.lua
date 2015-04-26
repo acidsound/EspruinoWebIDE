@@ -1,4 +1,4 @@
-// **Welcome to Espruino!**
+// **Welcome to NodeMCU!**
 //
 // NodeMCU lets you write commands interactively using a shell (It's also called a REPL).
 //

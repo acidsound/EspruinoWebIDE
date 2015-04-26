@@ -57,7 +57,7 @@
   { "title": "Wait","description":"Watch the chart change for a few seconds..."},
   { "title": "Action","description":"Assign a new value to the action expression...<br>Lets change the expression <b>b</b> to 1",
     "attachTo":"#b-action_input","position":"right","source":"1","onHide":"sendAttached"},
-  { "title": "Assign value", "description":"Assign the value to variable b on Espruino",
+  { "title": "Assign value", "description":"Assign the value to variable b on NodeMCU",
     "attachTo": ".executeActionPoint","position":"right","onHide":"clickAttached"},
   { "title": "Wait","description":"Now you can see the changes in the chart..."},
   { "title": "Stop fetching expressions","description": "Finally, click to stop refreshing the chart...",

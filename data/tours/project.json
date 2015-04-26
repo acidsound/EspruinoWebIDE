@@ -22,7 +22,7 @@
   },
   {
     "title": "Select Directory on Local Drive",
-    "description": "...click on the <i>Select Directory for Sandbox</i> button.<br>In the next step you'll need to choose a directory that Espruino can use to store your files.",
+    "description": "...click on the <i>Select Directory for Sandbox</i> button.<br>In the next step you'll need to choose a directory that NodeMCU can use to store your files.",
     "attachTo": ".projectButton",
     "position": "bottom",
     "onHide": "clickAttached"

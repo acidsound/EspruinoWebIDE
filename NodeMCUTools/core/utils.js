@@ -124,7 +124,7 @@
   
   /** Try and get a prompt from NodeMCU - if we don't see one, issue Ctrl-C
    * and hope it comes back. */
-  function getEspruinoPrompt(callback) {
+  function getNodeMCUPrompt(callback) {
     var  receivedData = "";
 
     var prevReader = NodeMCU.Core.Serial.startListening(function (readData) {
@@ -206,7 +206,7 @@
     }    
    
     if(NodeMCU.Core.Serial.isConnected()){
-      NodeMCU.Core.Utils.getEspruinoPrompt(function() {
+      NodeMCU.Core.Utils.getNodeMCUPrompt(function() {
         getProcessInfo(expressionToExecute, callback);
       });
     }
@@ -259,7 +259,7 @@
       escapeHTML : escapeHTML,
       getSubString : getSubString,
       getLexer : getLexer,
-      getEspruinoPrompt : getEspruinoPrompt,
+      getNodeMCUPrompt : getNodeMCUPrompt,
       executeExpression : executeExpression,
       versionToFloat : versionToFloat,
       htmlTable : htmlTable,

@@ -26,7 +26,7 @@
         NodeMCU.Core.MenuPortSelector.ensureConnected(function() {
           NodeMCU.Core.Terminal.focus(); // give the terminal focus
           NodeMCU.callProcessor("sending");
-          NodeMCU.Core.CodeWriter.writeToEspruino(val);
+          NodeMCU.Core.CodeWriter.writeToNodeMCU(val);
           NodeMCU.Core.EditorLUA.setCode(val);
         });        
         break;

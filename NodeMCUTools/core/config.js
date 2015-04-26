@@ -11,7 +11,7 @@
   To use this, on your plugin's `init` function, do something like the
   following:
   
-  Espruino.Core.Config.add("MAX_FOOBARS", {
+  NodeMCU.Core.Config.add("MAX_FOOBARS", {
     section : "Communications",           // Heading this will come under in the config screen
     name : "Foobars",                     // Nice name 
     description : "How many foobars?",    // More detail about this
@@ -25,7 +25,7 @@
   
   Then use: 
   
-  Espruino.Config.MAX_FOOBARS in your code
+  NodeMCU.Config.MAX_FOOBARS in your code
  ------------------------------------------------------------------
 **/
 "use strict";
