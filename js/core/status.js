@@ -21,10 +21,6 @@
   }
   
   function setStatus(text, progress) {
-    console.log(">>> "+ text);    
-    //var progressBox = $(".progress");
-    //var statusBox = $(".progress .status");
-    //var progressIndicator = $(".progress .indicator");
     $(".status__message").html(text);
 
     if (progress === undefined) {
@@ -40,18 +36,18 @@
 
     //if(NodeMCU.Core.Status.statusSoundOn) {NodeMCU.Core.Status.sendSound("status"); }
     //if(NodeMCU.Core.Status.statusSpeakOn) {NodeMCU.Core.Status.speak(text); }
-  };
+  }
 
   function hasProgress() {
     return progressMax > 0;
-  };    
+  }
   
   function incrementProgress(amount) {
     if (!hasProgress()) return;      
     progressAmt += amount;
     var progressPercent = (100 / progressMax) * progressAmt;
     $(".status__progress-bar").css("width", progressPercent + "%");
-  };  
+  }
   
   NodeMCU.Core.Status = {
       init : init,
