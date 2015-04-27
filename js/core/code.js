@@ -21,7 +21,7 @@
       name : "Auto Save",
       description : "Save code to Chrome's cloud storage when clicking 'Send to NodeMCU'?",
       type : "boolean",
-      defaultValue : true, 
+      defaultValue : true
     });    
 
     // Setup code mode button
@@ -51,7 +51,7 @@
         code = NodeMCU.Config.CODE;
         console.log("Loaded code from storage.");
       } else {
-        code = "var  l = false;\nsetInterval(function() {\n  l = !l;\n  LED1.write(l);\n}, 500);";
+        code = "gpio.mode(4,gpio.OUTPUT)\nl=false\ntmr.alarm(0,1000,1,function()\n  gpio.write(4,l and gpio.HIGH or gpio.LOW)\n  l=not l\nend)";
         console.log("No code in storage.");
       }
       NodeMCU.Core.EditorLUA.setCode(code);
