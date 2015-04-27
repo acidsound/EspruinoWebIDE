@@ -23,8 +23,8 @@
   }
 
   function writeToNodeMCU(code) {
-    code = reformatCode(code)+'\n';
-    
+    code = reformatCode(code)+'\r';
+
     var realSendSerial = function(data) {
       console.log("Sending... "+data);
       NodeMCU.Core.Serial.write(data);
@@ -35,7 +35,6 @@
     if (NodeMCU.Config.RESET_BEFORE_SEND) {
       sendSerial = function(data) { 
         // reset NodeMCU
-        //NodeMCU.Core.Serial.write("node.restart()\n");
         // wait for the reset
         setTimeout(function() {
           realSendSerial(data);

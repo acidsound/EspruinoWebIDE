@@ -137,8 +137,13 @@ Author: Gordon Williams (gw@pur3.co.uk)
     /* Here we queue data up to write out. We do this slowly because somehow
     characters get lost otherwise (compared to if we used other terminal apps
     like minicom) */
-    writeData = !writeData && data || (writeData+data);
-    NodeMCU.Core.Status.setStatus("Sending...", writeData.length);
+    if (writeData == undefined)
+      writeData = data;
+    else
+      writeData += data;
+    if (showStatus) {
+      NodeMCU.Core.Status.setStatus("Sending...", writeData.length);
+    }
     if (writeTimeout===undefined) {
         var sender=function(str) {
             if(str) {
@@ -174,7 +179,7 @@ Author: Gordon Williams (gw@pur3.co.uk)
       //      d = writeData;
       //      writeData = undefined;
       //    }
-      //    writeSerialDirect(d.replace(String.fromCharCode(27), ""));
+      //    writeSerialDirect(d);
       //    if (showStatus)
       //      NodeMCU.Core.Status.incrementProgress(d.length);
       //  }
@@ -183,11 +188,14 @@ Author: Gordon Williams (gw@pur3.co.uk)
       //    writeTimeout = undefined;
       //    if (showStatus)
       //      NodeMCU.Core.Status.setStatus("Sent");
-      //  } else {
-      //    writeTimeout = setTimeout(sender, 200);
       //  }
       //}
       //sender(); // send data instantly
+      //if (writeData!=undefined) {
+      //  writeTimeout = setInterval(sender, 200);
+      //} else {
+      //  if(showStatus) NodeMCU.Core.Status.setStatus("Sent");
+      //}
     }
   };
 
