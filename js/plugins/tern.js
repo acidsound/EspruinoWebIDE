@@ -35,7 +35,7 @@
       server = new CodeMirror.TernServer({defs: [JSON.parse(nodemcuJSON)]});
       var k = codeMirror.getOption("extraKeys");
       var nk = {
-        "Ctrl-Space": function(cm) { server.smartComplete(cm); }, 
+        "Esc": function(cm) { server.smartComplete(cm); },
         "Ctrl-I": function(cm) { server.showType(cm); },
         "Alt-.": function(cm) { server.jumpToDef(cm); },
         "Alt-,": function(cm) { server.jumpBack(cm); },
