@@ -137,7 +137,6 @@ Author: Gordon Williams (gw@pur3.co.uk)
     /* Here we queue data up to write out. We do this slowly because somehow
     characters get lost otherwise (compared to if we used other terminal apps
     like minicom) */
-    data = data.replace('\n', '\r');
     if (writeData == undefined)
       writeData = data;
     else
