@@ -25,7 +25,7 @@
       name : "Module Extensions",
       description : "The file extensions to use for each module. These are checked in order and the first that exists is used. One or more file extensions (including the dot) separated by `|`",
       type : "string",
-      defaultValue : ".min.js|.js"
+      defaultValue : ".min.lua|.lua"
     });    
     
     // When code is sent to NodeMCU, search it for modules and add extra code required to load them

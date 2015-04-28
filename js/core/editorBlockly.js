@@ -38,7 +38,7 @@
   
   function init() {
     // Config
-    NodeMCU.Core.Config.add("BLOCKLY_TO_JS", {
+    NodeMCU.Core.Config.add("BLOCKLY_TO_LUA", {
       section : "General",
       name : "Overwrite JavaScript with Graphical Editor",
       description : "When you click 'Send to NodeMCU', should the code from the Graphical Editor overwrite the JavaScript code in the editor window?",
@@ -51,7 +51,7 @@
     
     // Handle the 'sending' processor so we can update the JS if we need to...
     NodeMCU.addProcessor("sending", function(data, callback) {
-      if(NodeMCU.Config.BLOCKLY_TO_JS && NodeMCU.Core.Code.isInBlockly())
+      if(NodeMCU.Config.BLOCKLY_TO_LUA && NodeMCU.Core.Code.isInBlockly())
         NodeMCU.Core.EditorLUA.setCode( "// Code from Graphical Editor\n"+NodeMCU.Core.EditorBlockly.getCode() );
       callback(data);
     });
