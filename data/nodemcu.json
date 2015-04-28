@@ -759,5 +759,45 @@
       "!doc": "",
       "!url": "http://esp.appsoulute.com/doc#"
     }
+  },
+  "tmr": {
+    "!type": "fn()",
+    "!doc": "timer function",
+    "!url": "http://esp.appsoulute.com/doc#tmr",
+    "delay": {
+      "!type": "fn(file: ?)",
+      "!doc": "delay",
+      "!url": "http://esp.appsoulute.com/doc#tmr"
+    },
+    "now": {
+      "!type": "fn(file: ?)",
+      "!doc": "now",
+      "!url": "http://esp.appsoulute.com/doc#tmr"
+    },
+    "alarm": {
+      "!type": "fn(file: ?)",
+      "!doc": "alarm",
+      "!url": "http://esp.appsoulute.com/doc#tmr"
+    },
+    "stop": {
+      "!type": "fn(file: ?)",
+      "!doc": "stop",
+      "!url": "http://esp.appsoulute.com/doc#tmr"
+    },
+    "wdclr": {
+      "!type": "fn(file: ?)",
+      "!doc": "wdclr",
+      "!url": "http://esp.appsoulute.com/doc#tmr"
+    },
+    "time": {
+      "!type": "fn(file: ?)",
+      "!doc": "time",
+      "!url": "http://esp.appsoulute.com/doc#tmr"
+    },
+    "servo_pulse": {
+      "!type": "fn(file: ?)",
+      "!doc": "servo_pulse",
+      "!url": "http://esp.appsoulute.com/doc#tmr"
+    }
   }
 }
