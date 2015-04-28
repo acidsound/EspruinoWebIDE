@@ -12,7 +12,10 @@
 "use strict";
 (function(){
   var iconFolder,iconSnippet,actualProject = "";
-  var snippets = JSON.parse('{ "Reset":"reset();","Memory":"process.memory();","ClearInterval":"clearInterval();"}');
+  var snippets = {
+    "Reset": "node.restart()\r",
+    "Memory": "=node.heap()\r"
+  };
   function init() {
     NodeMCU.Core.Config.addSection("Project", {
       sortOrder:500,
@@ -354,7 +357,7 @@
       j++;
     }
     html += '<tr><th><input type="text" size="10" id="newSnippetName" value="snippet' + j.toString() + '"></th><th>';
-    html += '<input type="text" id="newSnippetValue" value="console.log();"></th>';
+    html += '<input type="text" id="newSnippetValue" value="print()"></th>';
     html += '<th><button class="addSnippet">Add Snippet</button></th></tr>';
     html += '</table>';
     return html;

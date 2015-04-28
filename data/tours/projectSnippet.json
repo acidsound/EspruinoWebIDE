@@ -21,7 +21,7 @@
     "attachTo": "#snippetPopup",
     "position": "top",
     "onHide": "sendBoard",
-    "source": "process.memory();\n"
+    "source": "=node.heap()\n"
   },
   {
     "title": "Memory Snippet",
