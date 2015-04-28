@@ -12,7 +12,7 @@
 "use strict";
 (function(){
   
-  var currentJSFileName = "code.js";
+  var currentLUAFileName = "code.lua";
   var currentXMLFileName = "code_blocks.xml";
   
   function init() {
@@ -33,7 +33,7 @@
         if (NodeMCU.Core.Code.isInBlockly())
           loadFile(NodeMCU.Core.EditorBlockly.setXML, currentXMLFileName);
         else
-          loadFile(NodeMCU.Core.EditorLUA.setCode, currentJSFileName);
+          loadFile(NodeMCU.Core.EditorLUA.setCode, currentLUAFileName);
       }
     });
 
@@ -50,16 +50,38 @@
         if (NodeMCU.Core.Code.isInBlockly())
           saveFile(NodeMCU.Core.EditorBlockly.getXML(), currentXMLFileName);
         else
-          saveFile(NodeMCU.Core.EditorLUA.getCode(), currentJSFileName);
+          saveFile(NodeMCU.Core.EditorLUA.getCode(), currentLUAFileName);
+      }
+    });
+
+    NodeMCU.Core.App.addIcon({
+      id: "uploadFile",
+      icon: "lightning",
+      title : "upload file",
+      order: 101,
+      area: {
+        name: "code",
+        position: "top"
+      },
+      click: function() {
+        if (!NodeMCU.Core.Code.isInBlockly())
+          convertFileFormat(NodeMCU.Core.EditorLUA.setCode, currentLUAFileName);
       }
     });
   }
+  var convertFileFormat = function (setSource, currentLUAFileName) {
+    var result = '';
+    result += 'file.open("'+currentLUAFileName+'", "w")\n';
+    result += NodeMCU.Core.EditorLUA.getCode().split('\n').map(function(v) { return "file.writeline([["+v+"]])"}).join('\n');
+    result += '\nfile.close()';
+    setSource(result);
+  };
 
   function setCurrentFileName(filename) {
     if (NodeMCU.Core.Code.isInBlockly()) {
       currentXMLFileName = filename;
     } else { 
-      currentJSFileName = filename;
+      currentLUAFileName = filename;
     }
   }
   
@@ -67,13 +89,13 @@
   function convertFromOS(chars) {
    if (!NodeMCU.Core.Utils.isWindows()) return chars;
    return chars.replace(/\r\n/g,"\n");
-  };
+  }
   
   /**  Handle newline conversions - Windows expects newlines as /r/n when we're saving/loading files */
   function convertToOS(chars) {
    if (!NodeMCU.Core.Utils.isWindows()) return chars;
    return chars.replace(/\r\n/g,"\n").replace(/\n/g,"\r\n");
-  };  
+  }
 
   function loadFile(callback, filename) {
     chrome.fileSystem.chooseEntry({type: 'openFile', suggestedName:filename}, function(fileEntry) {
