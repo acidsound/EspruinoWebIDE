@@ -325,6 +325,7 @@
   }
 
   NodeMCU.Core.App = {
+      appName: "NodeMCU Web IDE",
       init : init,
       openPopup: openPopup,
       closePopup: closePopup,

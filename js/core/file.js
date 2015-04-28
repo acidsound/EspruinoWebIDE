@@ -14,12 +14,26 @@
   
   var currentLUAFileName = "code.lua";
   var currentXMLFileName = "code_blocks.xml";
-  
+
   function init() {
     // Configuration
     
    
     // Add stuff we need
+    NodeMCU.Core.App.addIcon({
+      id: "new",
+      icon: "plus",
+      title : "New File",
+      order: 90,
+      area: {
+        name: "code",
+        position: "top"
+      },
+      click: function() {
+        newFile();
+      }
+    });
+
     NodeMCU.Core.App.addIcon({
       id: "openFile",
       icon: "folder-open", 
@@ -103,8 +117,10 @@
       if (fileEntry.name) setCurrentFileName(fileEntry.name);
       fileEntry.file(function(file) {
         var reader = new FileReader();
+        reader.fileName=file.name; /* It's a hackish approach. is there better way? */
         reader.onload = function(e) {
           callback(convertFromOS(e.target.result));
+          setFileName(this.fileName);
         };
         reader.onerror = function() {
           NodeMCU.Core.Notifications.error("Error Loading", true);
@@ -131,6 +147,7 @@
         writer.onwriteend = function(e) {
           writer.onwriteend = function(e) {
             console.log('FileWriter: complete');
+            setFileName(writableFileEntry.name);
           };
           console.log('FileWriter: writing');
           writer.write(blob);
@@ -140,9 +157,21 @@
         writer.truncate(blob.size);
       }, errorHandler);
     });
-  };  
+  }
 
+  var setFileName = function (fileName) {
+    $(".title-bar>.title-bar__title").text(NodeMCU.Core.App.appName+" - "+fileName);
+  };
+
+  function newFile() {
+    NodeMCU.Core.EditorBlockly.setXML('<xml xmlns="http://www.w3.org/1999/xhtml"></xml>');
+    NodeMCU.Core.EditorLUA.setCode('');
+    currentLUAFileName = "code.lua";
+    currentXMLFileName = "code_blocks.xml";
+    setFileName(currentLUAFileName);
+  }
   NodeMCU.Core.File = {
-    init : init
+    init : init,
+    newFile : newFile
   };
 }());

@@ -35,6 +35,7 @@
       server = new CodeMirror.TernServer({defs: [JSON.parse(nodemcuJSON)]});
       var k = codeMirror.getOption("extraKeys");
       var nk = {
+        "Ctrl-N": function(cm) { NodeMCU.Core.File.newFile(cm); },
         "Esc": function(cm) { server.smartComplete(cm); },
         "Ctrl-I": function(cm) { server.showType(cm); },
         "Alt-.": function(cm) { server.jumpToDef(cm); },
