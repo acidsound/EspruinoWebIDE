@@ -86,7 +86,16 @@
   var convertFileFormat = function (setSource, currentLUAFileName) {
     var result = '';
     result += 'file.open("'+currentLUAFileName+'", "w")\n';
-    result += NodeMCU.Core.EditorLUA.getCode().split('\n').map(function(v) { return "file.writeline([["+v+"]])"}).join('\n');
+    result += NodeMCU.Core.EditorLUA.getCode().split('\n').map(function(v) { 
+			var r="";
+			if (v.length>200) {
+				r=v.match(/(.{1,200})/g).map(function(vv) { return "file.write(\""+vv.replace(/"/g, "\\\"")+"\")" }).join("\n")
+				r+="\nfile.writeline(\"\")";
+			} else {
+				r="file.writeline(\""+v.replace(/"/g, "\\\"")+"\")";
+			}
+			return r;
+		}).join('\n');
     result += '\nfile.close()';
     setSource(result);
   };
