@@ -83,16 +83,16 @@
       }
     });
   }
-  var escapeString = function(s) {
-  	return s.replace(/"/g, "\\\"").replace(/\\/g, "\\\\"))
-  }
   var convertFileFormat = function (setSource, currentLUAFileName) {
+    var escapeString = function(s) {
+    	return s.replace(/\\/g, "\\\\").replace(/"/g, "\\\"");
+    }
     var result = '';
     result += 'file.open("'+currentLUAFileName+'", "w")\n';
     result += NodeMCU.Core.EditorLUA.getCode().split('\n').map(function(v) { 
 			var r="";
 			if (v.length>200) {
-				r=v.match(/(.{1,200})/g).map(function(vv) { return "file.write(\""+escapeString(vv).join("\n")
+				r=v.match(/(.{1,200})/g).map(function(vv) { return "file.write(\""+escapeString(vv).join("\n") });
 				r+="\nfile.writeline(\"\")";
 			} else {
 				r="file.writeline(\""+escapeString(v)+"\")";
